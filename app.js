@@ -5,6 +5,7 @@ const config = require('./config/database');
 
 require('dotenv').config();
 require('./config/fb_passport')(passport);
+require('./config/google_passport')(passport);
 
 
 const app = express();

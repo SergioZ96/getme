@@ -4,7 +4,8 @@ const passport = require('passport');
 
 
 router.get('/login', (req,res) => {
-    const login = `<a href="/auth/facebook">Login with Facebook</a>`;
+    const login = `<a href="/auth/facebook">Login with Facebook</a><br>
+                    <a href="/auth/google">Login with Google</a`;
     res.send(login);
 });
 
@@ -22,6 +23,17 @@ router.get('/auth/facebook/callback',
                 successRedirect: '/profile',
                 failureRedirect:'/login'
             }));
+
+// Route for Google Authentication
+router.get('/auth/google',
+  passport.authenticate('google', { scope: ['profile', 'email'] }));
+
+router.get('/auth/google/callback', 
+  passport.authenticate('google', { failureRedirect: '/login' }),
+  function(req, res) {
+    // Successful authentication, redirect home.
+    res.redirect('/profile');
+  });
 
 
 
