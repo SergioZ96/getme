@@ -14,7 +14,7 @@ router.get('/profile', (req,res) => {
 });
 
 // route for facebook authentication
-router.get('/auth/facebook', passport.authenticate('facebook'));
+router.get('/auth/facebook', passport.authenticate('facebook', { scope : ['email'] })); // need additional permissions from the user, the permissions can be requested via the scope option to passport.authenticate().
 
 // handle the callback after facebook has authenticated the user
 router.get('/auth/facebook/callback',

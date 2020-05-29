@@ -4,14 +4,17 @@
 
 const FacebookStrategy = require('passport-facebook').Strategy;
 const User = require('../models/user');
+
 require('dotenv').config();
+
 module.exports = function(passport) {
 
     passport.use(new FacebookStrategy({
 
         clientID:           process.env.FACEBOOK_APP_ID,
         clientSecret:       process.env.FACEBOOK_APP_SECRET,
-        callbackURL:        "http://localhost:3000/auth/facebook/callback"
+        callbackURL:        "http://localhost:3000/auth/facebook/callback",
+        profileFields:      ['id', 'displayName', 'emails']             // Fields we need from the User
       },
       
       // Verify Callback
@@ -33,7 +36,7 @@ module.exports = function(passport) {
                     // set user FB credentials in our user model
                     newUser.facebook.id = profile.id;
                     newUser.facebook.token = accessToken;
-                    newUser.facebook.email = profile.emails; // first of possible multiple emails
+                    newUser.facebook.email = profile.emails[0].value; // first of possible multiple emails
                     newUser.facebook.name = profile.displayName;
 
                     // saving our user to the database
