@@ -14,12 +14,13 @@ module.exports = function(passport) {
         clientID:           process.env.FACEBOOK_APP_ID,
         clientSecret:       process.env.FACEBOOK_APP_SECRET,
         callbackURL:        "http://localhost:3000/auth/facebook/callback",
-        profileFields:      ['id', 'displayName', 'emails']             // Fields we need from the User
+        profileFields:      ['id', 'displayName', 'emails'],             // Fields we need from the User
+        passReqToCallback:  true
       },
       
       // Verify Callback
       // Facebook will send back the token and profile
-        function(accessToken, refreshToken, profile, cb) {
+        function(req,accessToken, refreshToken, profile, cb) {
             User.findOne({ 'facebook.id': profile.id }, function (err, user) {
 
                 // check for error
@@ -30,21 +31,36 @@ module.exports = function(passport) {
                     return cb(null, user);
                 }
                 else{ // Create our new user with user info sent from FB 
-                    var newUser = new User();
+
+                    User.findOne({'google.email':profile.emails[0].value}, function(err, google_user) {
+                        if (google_user){
+                            //console.log('You already have a GetMe account w/ a different social login');
+                            //continue;
+                            //return cb(new Error('You already have a GetMe account with Facebook! '));
+                            return cb(null, false,req.flash('error','You already have a GetMe account with Google!'));
+                        }
+                        else{
+
+                            var newUser = new User();
                     
 
-                    // set user FB credentials in our user model
-                    newUser.facebook.id = profile.id;
-                    newUser.facebook.token = accessToken;
-                    newUser.facebook.email = profile.emails[0].value; // first of possible multiple emails
-                    newUser.facebook.name = profile.displayName;
+                            // set user FB credentials in our user model
+                            newUser.facebook.id = profile.id;
+                            newUser.facebook.token = accessToken;
+                            newUser.facebook.email = profile.emails[0].value; // first of possible multiple emails
+                            newUser.facebook.name = profile.displayName;
 
-                    // saving our user to the database
-                    newUser.save( (err) => {
-                        if (err) { throw err; }
-                        
-                        return cb(null, newUser);
+                            // saving our user to the database
+                            newUser.save( (err) => {
+                                if (err) { throw err; }
+                                
+                                return cb(null, newUser);
+                            });
+
+                        }
                     });
+
+                    
                 }
                 
             });

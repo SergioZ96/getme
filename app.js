@@ -2,6 +2,8 @@ const express = require('express');
 const session = require('express-session');
 const passport = require('passport');
 const config = require('./config/database');
+const flash = require('connect-flash');
+const cors = require('cors');
 
 require('dotenv').config();
 require('./config/fb_passport')(passport);
@@ -12,9 +14,14 @@ const app = express();
 
 const port = 3000;
 
+app.use(cors());
+
 // Bodyparser
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
+
+// Connect flash for flash messages
+app.use(flash());
 
 // Session Middleware
 //  -> handles all things for us, i.e., creating the session, setting the session cookie,
