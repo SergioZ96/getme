@@ -5,17 +5,14 @@ const flash = require('connect-flash');
 
 
 router.get('/login', (req,res) => {
-    const login = `<a href="/auth/facebook">Login with Facebook</a><br>
-                    <a href="/auth/google">Login with Google</a`;
     
     //console.log(req.flash('error'));   
-    console.log(req.flash().error);             
-    res.send(login);
+    //console.log(req.flash().error);             
 });
 
 // Needs to be a protected route
 router.get('/profile', (req,res) => {
-    res.send('Welcome to your profile!');
+
 });
 
 // route for facebook authentication
@@ -24,20 +21,21 @@ router.get('/auth/facebook', passport.authenticate('facebook', { scope : ['email
 // handle the callback after facebook has authenticated the user
 router.get('/auth/facebook/callback',
             passport.authenticate('facebook', {
-                successRedirect: '/profile',
-                failureRedirect:'/login'
-            }));
+                successRedirect: 'http://localhost:4200/profile',
+                failureRedirect:'http://localhost:4200/'
+            }
+            ));
 
 // Route for Google Authentication
 router.get('/auth/google',
   passport.authenticate('google', { scope: ['profile', 'email'] }));
 
 router.get('/auth/google/callback', 
-  passport.authenticate('google', { failureRedirect: '/login', failureFlash: true }),
-  function(req, res) {
+  passport.authenticate('google', { successRedirect: 'http://localhost:4200/profile', failureRedirect: 'http://localhost:4200/'})
+  
     // Successful authentication, redirect home.
-    res.redirect('/profile');
-  });
+    //res.redirect('/profile');
+);
 
 
 

@@ -38,7 +38,7 @@ module.exports = function(passport){
                         //console.log('You already have a GetMe account w/ a different social login');
                         //continue;
                         //return cb(new Error('You already have a GetMe account with Facebook! '));
-                        return cb(null, false,req.flash('error','You already have a GetMe account with Facebook!'));
+                        return cb(null, false);
                     }
                     else{
 

@@ -14,8 +14,8 @@ module.exports = function(passport) {
         clientID:           process.env.FACEBOOK_APP_ID,
         clientSecret:       process.env.FACEBOOK_APP_SECRET,
         callbackURL:        "http://localhost:3000/auth/facebook/callback",
-        profileFields:      ['id', 'displayName', 'emails'],             // Fields we need from the User
-        passReqToCallback:  true
+        profileFields:      ['id', 'displayName', 'emails']             // Fields we need from the User
+        //passReqToCallback:  true
       },
       
       // Verify Callback
@@ -37,7 +37,7 @@ module.exports = function(passport) {
                             //console.log('You already have a GetMe account w/ a different social login');
                             //continue;
                             //return cb(new Error('You already have a GetMe account with Facebook! '));
-                            return cb(null, false,req.flash('error','You already have a GetMe account with Google!'));
+                            return cb(null, false);
                         }
                         else{
 

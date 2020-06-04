@@ -1,0 +1,16 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container">
+      <a class="navbar-brand">getme</a>
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Login
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" href="http://localhost:3000/auth/google" (click)="google_auth()" >Google</a>
+          <a class="dropdown-item" href="http://localhost:3000/auth/facebook" (click)="fb_auth()">Facebook</a>
+          <a class="dropdown-item" >Twitter</a>
+        </div>
+      </div>
+    
+  </div>
+</nav>
