@@ -6,8 +6,6 @@ const flash = require('connect-flash');
 const cors = require('cors');
 
 require('dotenv').config();
-require('./config/fb_passport')(passport);
-require('./config/google_passport')(passport);
 
 
 const app = express();
@@ -18,10 +16,7 @@ app.use(cors());
 
 // Bodyparser
 app.use(express.json());
-app.use(express.urlencoded({extended: false}));
-
-// Connect flash for flash messages
-app.use(flash());
+app.use(express.urlencoded({extended: true}));
 
 // Session Middleware
 //  -> handles all things for us, i.e., creating the session, setting the session cookie,
@@ -30,17 +25,26 @@ app.use(flash());
 //  -> all the requests to the app routes are now using sessions
 app.use(session({
     secret: process.env.DB_SECRET,
-    resave: false,
+    resave: true,
     saveUninitialized: true,
     cookie: {
         maxAge: 1000 * 60 * 60 * 24 // Equals 1 day
     }
 }));
 
-
 // Passport Middleware
 app.use(passport.initialize()); // initializes passport/authentication module
 app.use(passport.session()); // acts as a middleware to alter the req object and change the 'user' value that is currently the session id (from the client cookie) into the true deserialized user object.
+
+// Connect flash for flash messages
+app.use(flash());
+
+
+require('./config/fb_passport')(passport);
+require('./config/google_passport')(passport);
+require('./config/twitter_passport')(passport);
+
+
 
 // Routing Middleware
 //app.use('/index', require('./routes/index'));

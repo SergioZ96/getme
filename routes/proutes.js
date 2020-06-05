@@ -23,8 +23,12 @@ router.get('/auth/facebook/callback',
             passport.authenticate('facebook', {
                 successRedirect: 'http://localhost:4200/profile',
                 failureRedirect:'http://localhost:4200/'
-            }
-            ));
+            }),
+             (req, res) => {
+              {
+                res.send(req.user);
+              }
+            });
 
 // Route for Google Authentication
 router.get('/auth/google',
@@ -37,6 +41,16 @@ router.get('/auth/google/callback',
     //res.redirect('/profile');
 );
 
+
+router.get('/auth/twitter', passport.authenticate('twitter', { scope: ['email']}));
+
+router.get('/auth/twitter/callback', passport.authenticate('twitter', 
+  {
+    failureRedirect: 'http://localhost:4200/'
+  }),
+  (req, res) => {
+    res.redirect('http://localhost:4200/profile');
+  });
 
 
 module.exports = router;
