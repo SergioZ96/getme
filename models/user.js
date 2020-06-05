@@ -3,17 +3,15 @@ const mongoose = require('mongoose');
 
 
 const UserSchema = mongoose.Schema({
-    facebook: {
-        id: String,
-        token: String,
-        email: String,
-        name: String
-    },
-    google: {
-        id: String,
-        token: String,
-        email: String,
-        name: String
+
+    firstname: String,
+    lastname: String,
+    email: String,
+    getme_views: [],
+    account_info: {
+        social_id: String,
+        social: String,
+        date_created: Date
     }
 });
 
