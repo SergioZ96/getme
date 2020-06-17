@@ -9,28 +9,29 @@ require('dotenv').config();
 
 module.exports = function(passport) {
 
-    passport.serializeUser((user, done) => {
-        done(null, user.id);
-    });
-
-    passport.deserializeUser((id, done) => {
-        User.findById(id, (err, user) => {
-            done(err,user);
+    passport.serializeUser(function(user, done) {
+        done(null, user._id);
+      });
+      
+      passport.deserializeUser(function(id, done) {
+        User.findById(id, function (err, user) {
+          done(err, user);
         });
-    });
+      });
+
 
     passport.use(new FacebookStrategy({
 
         clientID:           process.env.FACEBOOK_APP_ID,
         clientSecret:       process.env.FACEBOOK_APP_SECRET,
         callbackURL:        "http://localhost:3000/auth/facebook/callback",
-        profileFields:      ['id', 'displayName', 'emails']             // Fields we need from the User
-        //passReqToCallback:  true
+        profileFields:      ['id', 'name', 'emails'],             // Fields we need from the User
+        passReqToCallback:  true
       },
       
       // Verify Callback
       // Facebook will send back the token and profile
-        function(accessToken, refreshToken, profile, done) {
+        function(req, accessToken, refreshToken, profile, done) {
             User.findOne({ 'account_info.social_id': profile.id }, function (err, user) {
 
                 // check for error
@@ -38,6 +39,7 @@ module.exports = function(passport) {
 
                 // if the user exists
                 if (user) {
+                    req.session.user = user;
                     return done(null, user);
                 }
                 else{ // Create our new user with user info sent from FB 
@@ -63,7 +65,7 @@ module.exports = function(passport) {
                             // saving our user to the database
                             newUser.save( (err) => {
                                 if (err) { throw err; }
-                                
+                                req.session.user = newUser;
                                 return done(null, newUser);
                             });
 

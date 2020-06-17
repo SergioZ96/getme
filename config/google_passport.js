@@ -7,17 +7,15 @@ require('dotenv').config();
 
 module.exports = function(passport){
 
-    passport.serializeUser((user, done) => {
-        done(null, user.id);
+    passport.serializeUser(function(user, done) {
+        done(null, user._id);
     });
-
-    passport.deserializeUser((id, done) => {
-        User.findById(id, (err, user) => {
-            done(err,user);
+      
+    passport.deserializeUser(function(id, done) {
+        User.findById(id, function(err, user) {
+            done(err, user);
         });
     });
-
-
 
     passport.use(new GoogleStrategy({
 

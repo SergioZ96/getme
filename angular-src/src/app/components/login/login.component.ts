@@ -17,5 +17,10 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
   
+  loginAuth(){
+    this.authService.getCookie();
+    this.router.navigate(['profile']);
+  }
 
+  
 }
