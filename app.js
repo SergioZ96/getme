@@ -5,7 +5,7 @@ const config = require('./config/database');
 const flash = require('connect-flash');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
-const generateAccessToken = require('./token').generateAccessToken;
+//const generateAccessToken = require('./token').generateAccessToken;
 require('dotenv').config();
 
 
@@ -33,7 +33,7 @@ app.use(session({
     cookie: {
         maxAge: 1000 * 60 * 60 * 24 // Equals 1 day
     }
-}));
+})); 
 
 
 // Passport Middleware

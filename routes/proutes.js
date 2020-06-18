@@ -5,6 +5,9 @@ const flash = require('connect-flash');
 const User = require('../models/user');
 const generateAccessToken = require('../token').generateAccessToken;
 
+router.use(require('cookie-parser')());
+
+
 
 
 router.get('/login', (req,res) => {
@@ -16,54 +19,58 @@ router.get('/login', (req,res) => {
 
 
 /* FACEBOOK ROUTER */
-router.get('/auth/facebook', passport.authenticate('facebook', { scope : ['email'] })); // need additional permissions from the user, the permissions can be requested via the scope option to passport.authenticate().
+router.get('/auth/facebook', passport.authenticate('facebook', { session: false, scope : ['email'] })); // need additional permissions from the user, the permissions can be requested via the scope option to passport.authenticate().
 
 // handle the callback after facebook has authenticated the user
-router.get('/auth/facebook/callback',
-  passport.authenticate('facebook', {
-    //successRedirect: "/auth",
-    failureRedirect: "http://localhost:4200"
-  }), 
-  (req, res) => {
-    res.redirect('/auth');
-  }
-);  
+router.get('/auth/facebook/callback', (req, res, next) => {
+
+  passport.authenticate('facebook', { session: false, failureRedirect: "http://localhost:4200"}, (err, user, info) => {
+    if (err) return next(err);
+    
+    var token = generateAccessToken(user);
+    res.cookie('jwt_user', JSON.stringify({ jwt: token, user: user }));
+    res.redirect("http://localhost:4200/login");
+
+  })(req, res, next); 
+
+}); 
+  
 
 /* GOOGLE ROUTER */
 router.get('/auth/google',
-  passport.authenticate('google', { scope: ['profile', 'email'] }));
+  passport.authenticate('google', { session: false, scope: ['profile', 'email'] }));
 
-router.get('/auth/google/callback', 
-  passport.authenticate('google', 
-  { 
-    //session: false,
-    //successRedirect: 'http://localhost:3000/profile', 
-    failureRedirect: 'http://localhost:4200'
-  }),
-  (req, res) => {
-    // Generate JWT Token using User
-    res.redirect('/auth');
-  }
+router.get('/auth/google/callback', (req, res, next) => {
 
-);
+  passport.authenticate('google', { session: false, failureRedirect: 'http://localhost:4200'}, (err,user,info) => {
+    
+    var token = generateAccessToken(user);
+    res.cookie('jwt_user', JSON.stringify({jwt: token, user: user}));
+    res.redirect('http://localhost:4200/login');
+
+  })(req, res, next);
+
+});
 
 
 /* TWITTER ROUTER */
 router.get('/auth/twitter', passport.authenticate('twitter', { scope: ['email']}));
 
-router.get('/auth/twitter/callback', passport.authenticate('twitter', 
-  {
-    //session: false,
-    failureRedirect: 'http://localhost:4200'
-  }),
-  (req, res) => {
-    
-    res.redirect('/auth');
-  });
+router.get('/auth/twitter/callback', (req, res, next) => {
+
+  passport.authenticate('twitter', { failureRedirect: 'http://localhost:4200' }, (err, user, info) => {
+
+    var token = generateAccessToken(user);
+    res.cookie('jwt_user', JSON.stringify({jwt: token, user: user }));
+    res.redirect('http://localhost:4200/login');
+
+  })(req, res, next);
+
+});
 
 
 
-router.use(require('cookie-parser')());
+
 
 router.route('/auth')
 .get((req, res, next) => {

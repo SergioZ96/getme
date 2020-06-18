@@ -22,7 +22,7 @@ export class AuthService {
   getCookie(){
     var cookieValue = JSON.parse(this.cs.get('jwt_user'));
     this.storeUserData(cookieValue.jwt, cookieValue.user);
-    this.cs.delete('jwt_user');
+    //this.cs.delete('jwt_user');
   }
   /*  
   auth_User(): Observable<any> {
