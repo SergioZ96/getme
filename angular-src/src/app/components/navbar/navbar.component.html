@@ -2,7 +2,8 @@
   <div class="container">
       <a class="navbar-brand">getme</a>
       <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        
+        <button *ngIf="!authService.loggedIn()" class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Login
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -10,7 +11,13 @@
           <a class="dropdown-item" href="http://localhost:3000/auth/facebook">Facebook</a>
           <a class="dropdown-item" href="http://localhost:3000/auth/twitter">Twitter</a>
         </div>
+
+        <!--<li *ngIf="authService.loggedIn()"><a (click)="onLogoutClick()" href="#"></a></li>-->
       </div>
+      <div *ngIf="authService.loggedIn()" class="logout">
+        <a (click)="onLogoutClick()" href="#">Logout</a>
+      </div>
+      <!-- <li *ngIf="authService.loggedIn()"><a (click)="onLogoutClick()" href="#"></a></li> -->
     
   </div>
 </nav>

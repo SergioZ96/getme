@@ -71,7 +71,7 @@ router.get('/auth/twitter/callback', (req, res, next) => {
 
 
 
-
+/* 
 router.route('/auth')
 .get((req, res, next) => {
 
@@ -79,7 +79,7 @@ router.route('/auth')
   res.cookie('jwt_user', JSON.stringify({ jwt: token, user: req.user }));
   res.redirect("http://localhost:4200/login");
   next();
-});
+}); */
 /* .post((req, res, next) => {
   console.log(JSON.stringify(req.cookies));
   var token = generateAccessToken(req.cookies);
@@ -90,7 +90,7 @@ router.route('/auth')
 
 // Needs to be a protected route
 router.get('/profile', passport.authenticate('jwt', {session: false }), (req,res) => {
-  res.json({ user: req.session.user });
+  res.json({ success: true, msg: "hello there !"});
 });
 
 
