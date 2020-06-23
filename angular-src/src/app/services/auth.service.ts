@@ -49,11 +49,6 @@ export class AuthService {
   }
 
   loggedIn(){
-    /*
-    this.loadToken();
-    const helper = new JwtHelperService();
-    return helper.isTokenExpired(this.authToken);
-    */
    // true if token not available or expired
    // flase if token is not
     return !(this.jwtHelper.isTokenExpired());

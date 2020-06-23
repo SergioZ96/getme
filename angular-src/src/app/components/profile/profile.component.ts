@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
-import { CookieService } from 'ngx-cookie-service';
+
 
 
 @Component({
@@ -13,8 +13,7 @@ export class ProfileComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private router: Router,
-    private cs: CookieService
+    private router: Router
   ) { }
 
   ngOnInit(): void {

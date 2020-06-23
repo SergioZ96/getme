@@ -13,6 +13,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { HomeComponent } from './components/home/home.component';
 
 import { AuthService } from './services/auth.service';
+import { AuthGuard } from './guards/auth.guard';
 import { VertNavComponent } from './components/vert-nav/vert-nav.component';
 import { ViewsComponent } from './components/views/views.component';
 
@@ -22,9 +23,9 @@ export function tokenGetter(){
 
 const appRoutes: Routes = [
   { path:'', component: HomeComponent },
-  { path:'login', component: LoginComponent },
-  { path:'profile', component: ProfileComponent },
-  { path:'views', component: ViewsComponent }
+  { path:'login', component: LoginComponent},
+  { path:'profile', component: ProfileComponent, canActivate: [AuthGuard] },
+  { path:'views', component: ViewsComponent, canActivate: [AuthGuard] }
 ];
 
 
@@ -49,7 +50,7 @@ const appRoutes: Routes = [
       }
     })
   ],
-  providers: [AuthService, CookieService],
+  providers: [AuthService, CookieService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
