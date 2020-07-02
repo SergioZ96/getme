@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-views',
@@ -7,9 +9,28 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ViewsComponent implements OnInit {
 
-  constructor() { }
+  topic: String;
+  issue: String;
+  view: String;
+
+  constructor(private router: Router, public authService: AuthService) { }
 
   ngOnInit(): void {
+  }
+
+  onGetmeSubmit(){
+    const getme = {
+      topic: this.topic,
+      issue: this.issue,
+      view: this.view
+    };
+
+    this.authService.addGetme(getme).subscribe(data => {
+      if(data.success){
+        console.log("Added your Getme!");
+      }
+    });
+
   }
 
 }

@@ -1,0 +1,7 @@
+<nav *ngIf="authService.loggedIn()" id="sidebar">
+    <ul class="sidebar-container">
+      <li><a [routerLink]="['/profile']">Profile</a></li>
+      <li><a [routerLink]="['/views']">Views</a></li>
+      <li><a href="#">Settings</a></li>
+    </ul>
+</nav>

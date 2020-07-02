@@ -69,29 +69,31 @@ router.get('/auth/twitter/callback', (req, res, next) => {
 });
 
 
-
-
-/* 
-router.route('/auth')
-.get((req, res, next) => {
-
-  var token = generateAccessToken(req.user);
-  res.cookie('jwt_user', JSON.stringify({ jwt: token, user: req.user }));
-  res.redirect("http://localhost:4200/login");
-  next();
-}); */
-/* .post((req, res, next) => {
-  console.log(JSON.stringify(req.cookies));
-  var token = generateAccessToken(req.cookies);
-  res.json({jwt: token, user: req.cookies });
-  next();
-}); */
-
-
 // Needs to be a protected route
 router.get('/profile', passport.authenticate('jwt', {session: false }), (req,res) => {
   res.json({ success: true, msg: "hello there !"});
 });
 
+
+router.post('/addgetme', passport.authenticate('jwt', {session: false}), (req,res) => {
+  const getme = {
+    topic: req.body.topic,
+    issue: req.body.issue,
+    view: req.body.view
+  }
+
+  // updating the users getme_views by pushing the getme to the array in mongodb
+  User.updateOne({_id: req.user._id}, { $push: { getme_views : [getme]}},
+    (err, result) => {
+      if(err) {
+        res.send(err);
+      }
+      else{
+        res.json({success: true});
+      }
+    }
+  );
+
+});
 
 module.exports = router;

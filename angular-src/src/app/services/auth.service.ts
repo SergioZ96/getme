@@ -23,7 +23,7 @@ export class AuthService {
   getCookie(){
     var cookieValue = JSON.parse(this.cs.get('jwt_user'));
     this.storeUserData(cookieValue.jwt, cookieValue.user);
-    //this.cs.delete('jwt_user');
+    this.cs.delete('jwt_user');
   }
   /*  
   auth_User(): Observable<any> {
@@ -34,6 +34,11 @@ export class AuthService {
   //getProfile(): Observable<any>{
 
   //}
+  addGetme(getme): Observable<any> {
+    let httpOptions = { headers: new HttpHeaders({'Content-Type': 'application/json'})};
+    return this.http.post<any>('http://localhost:3000/addgetme', getme, httpOptions);
+  }
+
 
   
   storeUserData(token, user){
@@ -58,7 +63,7 @@ export class AuthService {
     this.authToken = null;
     this.user = null;
     localStorage.clear();
-    this.cs.delete('jwt_user');
+    //this.cs.delete('jwt_user');
   }
 
 }

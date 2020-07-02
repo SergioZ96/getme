@@ -1,1 +1,20 @@
-<p>views works!</p>
+<h1>Views</h1>
+<p>
+    Here, you can create different topics, or GetMe's, covering certain beliefs on issues that matter to you most.
+</p>
+<!-- <input type="button" value="New Getme" class="new_getme"> -->
+<form (submit)="onGetmeSubmit()">
+    <div class="form-group">
+        <label>Topic</label>
+        <input type="text" [(ngModel)]="topic" name="topic" class="form-control">
+    </div>
+    <div class="form-group">
+        <label>Is There A Current Issue?</label>
+        <input type="text" [(ngModel)]="issue" name="issue" class="form-control">
+    </div>
+    <div class="form-group">
+        <label>What Is your View on this topic?</label>
+        <input type="text" style="height:200px;font-size:14px;" [(ngModel)]="view" name="view" class="form-control">
+    </div>
+    <input type="submit" class="btn btn-primary" value="Submit">
+</form>

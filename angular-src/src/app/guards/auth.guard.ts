@@ -6,7 +6,10 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard implements CanActivate {
+/*
+  CanActivate is an interface that a class can implement to be a guard deciding if a route can be activated
+*/
+export class AuthGuard implements CanActivate { 
 
   constructor(private router: Router, private authService: AuthService){
 

@@ -7,7 +7,11 @@ const UserSchema = mongoose.Schema({
     firstname: String,
     lastname: String,
     email: String,
-    getme_views: [],
+    getme_views: [{
+        topic: String,
+        issue: String,
+        view: String
+    }],
     account_info: {
         social_id: String,
         social: String,
