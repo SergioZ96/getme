@@ -39,6 +39,11 @@ export class AuthService {
     return this.http.post<any>('http://localhost:3000/addgetme', getme, httpOptions);
   }
 
+  loadGetme(): Observable<any> {
+    let httpOptions = { headers: new HttpHeaders({'Content-Type': 'application/json'})};
+    return this.http.get<any>('http://localhost:3000/loadgetme',httpOptions);
+  }
+
 
   
   storeUserData(token, user){

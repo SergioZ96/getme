@@ -3,6 +3,7 @@ const router = express.Router();
 const passport = require('passport');
 const flash = require('connect-flash');
 const User = require('../models/user');
+const { response } = require('express');
 const generateAccessToken = require('../token').generateAccessToken;
 
 router.use(require('cookie-parser')());
@@ -95,5 +96,16 @@ router.post('/addgetme', passport.authenticate('jwt', {session: false}), (req,re
   );
 
 });
+
+router.get('/loadgetme', passport.authenticate('jwt', {session: false}), async function(req,res){
+  // Here we have to pass the user's getme's from the db to the client
+  const result = await User.findById(req.user._id, 'getme_views').exec();
+  if(result === null){
+    res.json({success: false, views: "none"});
+  }
+  else{
+    res.json({success: true, getme_views: result});
+  }
+}); 
 
 module.exports = router;

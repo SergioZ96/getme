@@ -18,6 +18,7 @@ import { InterceptorService } from './services/interceptor.service';
 import { AuthGuard } from './guards/auth.guard';
 import { ViewsComponent } from './components/views/views.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { ChildviewComponent } from './components/childview/childview.component';
 
 export function tokenGetter(){
   return localStorage.getItem("jwt");
@@ -39,7 +40,8 @@ const appRoutes: Routes = [
     ProfileComponent,
     HomeComponent,
     ViewsComponent,
-    SidebarComponent
+    SidebarComponent,
+    ChildviewComponent
   ],
   imports: [
     BrowserModule,
