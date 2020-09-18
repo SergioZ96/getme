@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, Input } from '@angular/core';
+import { Component, OnInit, OnChanges, Input, Output, EventEmitter } from '@angular/core';
 import { Getme } from '../../interfaces/getme';
 
 @Component({
@@ -8,11 +8,13 @@ import { Getme } from '../../interfaces/getme';
 })
 export class ChildviewComponent implements OnInit {
   @Input() getme_list: Getme[];
-  /* getme_view: any = {
-    topic: String,
-    issue: String,
-    view: String
-  }; */
+  // Output and EventEmitter work hand-in-hand
+  @Output() delGetmeEvent = new EventEmitter<string>();
+
+  deleteGetme(value: string) {
+    this.delGetmeEvent.emit(value);
+  }
+  
   constructor() { }
 
   ngOnInit(): void {

@@ -33,7 +33,6 @@ export class ViewsComponent implements OnInit {
           };
           this.getme_list.push(this.getme); 
         }
-        //console.log(this.getme_list);
       }
       
     });
@@ -55,5 +54,25 @@ export class ViewsComponent implements OnInit {
     });
 
   }
+  /*
+  delGetme(topic: string): void{
+    this.getme_list = this.getme_list.map(getme => {
+      if(getme.topic == topic){
+        delete getme;
+        return getme;
+      }
+    })
+  }
+  */
 
+  delGetme(topic: string) {
+    // filtering out the the topic of the getme that we want to delete and returns a new getme list
+    this.getme_list = this.getme_list.filter(getme => getme.topic !== topic);
+
+    this.authService.deleteGetme({topic: topic}).subscribe(data => {
+      if(data.success) {
+        console.log("Deleted Getme");
+      }
+    });
+  }
 }

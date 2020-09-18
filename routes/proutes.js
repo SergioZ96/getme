@@ -97,6 +97,21 @@ router.post('/addgetme', passport.authenticate('jwt', {session: false}), (req,re
 
 });
 
+router.post('/deletegetme', passport.authenticate('jwt', {session: false}), (req, res) => {
+  console.log(req.body.topic);
+  User.updateOne({_id: req.user._id}, { $pull: { getme_views: {topic: req.body.topic}}},
+    (err, result) => {
+      if(err){
+        res.send(err);
+      }
+      else {
+        res.json({success: true, topic: req.body.topic});
+      }
+    }
+  );
+});
+
+
 router.get('/loadgetme', passport.authenticate('jwt', {session: false}), async function(req,res){
   // Here we have to pass the user's getme's from the db to the client
   const result = await User.findById(req.user._id, 'getme_views').exec();
@@ -106,6 +121,8 @@ router.get('/loadgetme', passport.authenticate('jwt', {session: false}), async f
   else{
     res.json({success: true, getme_views: result});
   }
-}); 
+});
+
+
 
 module.exports = router;

@@ -18,5 +18,7 @@
     </div>
     <input type="submit" class="btn btn-primary" value="Submit">
 </form>
-<app-childview [getme_list]='getme_list'> </app-childview>
+<br>
+<!-- $event is the child event payload-->
+<app-childview [getme_list]='getme_list' (delGetmeEvent)="delGetme($event)"> </app-childview>
 

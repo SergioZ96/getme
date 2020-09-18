@@ -44,6 +44,10 @@ export class AuthService {
     return this.http.get<any>('http://localhost:3000/loadgetme',httpOptions);
   }
 
+  deleteGetme(topic): Observable<any> {
+    let httpOptions = { headers: new HttpHeaders({'Content-Type': 'application/json'})};
+    return this.http.post<any>('http://localhost:3000/deletegetme', topic, httpOptions);
+  }
 
   
   storeUserData(token, user){
