@@ -34,7 +34,7 @@ export class AuthService {
   //getProfile(): Observable<any>{
 
   //}
-  addGetme(getme): Observable<any> {
+  /* addGetme(getme): Observable<any> {
     let httpOptions = { headers: new HttpHeaders({'Content-Type': 'application/json'})};
     return this.http.post<any>('http://localhost:3000/addgetme', getme, httpOptions);
   }
@@ -47,7 +47,7 @@ export class AuthService {
   deleteGetme(id): Observable<any> {
     let httpOptions = { headers: new HttpHeaders({'Content-Type': 'application/json'})};
     return this.http.post<any>('http://localhost:3000/deletegetme', id, httpOptions);
-  }
+  } */
 
   
   storeUserData(token, user){

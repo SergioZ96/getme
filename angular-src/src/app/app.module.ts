@@ -19,6 +19,7 @@ import { ChildviewComponent } from './components/childview/childview.component';
 import { WholeviewComponent } from './components/wholeview/wholeview.component';
 
 import { AuthService } from './services/auth.service';
+import { GService } from './services/g.service';
 import { InterceptorService } from './services/interceptor.service';
 import { AuthGuard } from './guards/auth.guard';
 
@@ -62,7 +63,7 @@ const appRoutes: Routes = [
       }
     })
   ],
-  providers: [AuthService, CookieService, AuthGuard, { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true}],
+  providers: [AuthService, GService, CookieService, AuthGuard, { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
