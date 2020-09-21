@@ -1,8 +1,10 @@
 <div *ngFor="let getme of getme_list">   
     <a [routerLink]="['/view']" [state]="{topic: getme.topic,issue: getme.issue,view: getme.view}" >
         <h2>{{ getme.topic }}</h2><br>
+        
         <!--<h3>{{ getme.issue }}</h3><br>
         <p>{{ getme.view }}</p>-->
     </a>
-    <img (click)="deleteGetme(getme.topic)" class="float-right" src="assets/img/delete-24px.svg" alt="delete">    
+    <h3>{{ getme._id }}</h3>
+    <img (click)="deleteGetme(getme._id)" class="float-right" src="assets/img/delete-24px.svg" alt="delete">    
 </div> 

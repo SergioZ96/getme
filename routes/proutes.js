@@ -75,7 +75,7 @@ router.get('/profile', passport.authenticate('jwt', {session: false }), (req,res
   res.json({ success: true, msg: "hello there !"});
 });
 
-
+// getme add route which receives topic, issue, view and returns the new getme _id to push the getme_list on front end
 router.post('/addgetme', passport.authenticate('jwt', {session: false}), (req,res) => {
   const getme = {
     topic: req.body.topic,
@@ -90,22 +90,35 @@ router.post('/addgetme', passport.authenticate('jwt', {session: false}), (req,re
         res.send(err);
       }
       else{
-        res.json({success: true});
+        // aggregate pipeline to retrieve size of getme array to retrieve last element's (newly added getme) _id
+        const array_size = User.aggregate()
+                            .match({_id: req.user._id})
+                            .project({
+                              getme_views: {$size:"$getme_views"}
+                            })
+                            .exec((err, getme_views) => {
+                              const array_size = getme_views.length;
+                              const newgetme_id = getme_views[array_size - 1]._id;
+                              res.json({success: true, new_id: newgetme_id}); // sending the new _id to front end
+                            }); 
+         
+        
       }
     }
   );
 
 });
 
+// getme delete route which deletes on the basis of getme _id
 router.post('/deletegetme', passport.authenticate('jwt', {session: false}), (req, res) => {
-  console.log(req.body.topic);
-  User.updateOne({_id: req.user._id}, { $pull: { getme_views: {topic: req.body.topic}}},
+  console.log(req.body._id);
+  User.updateOne({_id: req.user._id}, { $pull: { getme_views: {_id: req.body._id}}},
     (err, result) => {
       if(err){
         res.send(err);
       }
       else {
-        res.json({success: true, topic: req.body.topic});
+        res.json({success: true, _id: req.body._id});
       }
     }
   );
@@ -119,6 +132,7 @@ router.get('/loadgetme', passport.authenticate('jwt', {session: false}), async f
     res.json({success: false, views: "none"});
   }
   else{
+    console.log(result);
     res.json({success: true, getme_views: result});
   }
 });

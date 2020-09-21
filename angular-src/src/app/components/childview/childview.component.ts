@@ -1,5 +1,5 @@
 import { Component, OnInit, OnChanges, Input, Output, EventEmitter } from '@angular/core';
-import { Getme } from '../../interfaces/getme';
+import { Getme, UserGetme } from '../../interfaces/getme';
 
 @Component({
   selector: 'app-childview',
@@ -7,7 +7,7 @@ import { Getme } from '../../interfaces/getme';
   styleUrls: ['./childview.component.css']
 })
 export class ChildviewComponent implements OnInit {
-  @Input() getme_list: Getme[];
+  @Input() getme_list: UserGetme[];
   // Output and EventEmitter work hand-in-hand
   @Output() delGetmeEvent = new EventEmitter<string>();
 

@@ -41,12 +41,12 @@ export class AuthService {
 
   loadGetme(): Observable<any> {
     let httpOptions = { headers: new HttpHeaders({'Content-Type': 'application/json'})};
-    return this.http.get<any>('http://localhost:3000/loadgetme',httpOptions);
+    return this.http.get<any>('http://localhost:3000/loadgetme', httpOptions);
   }
 
-  deleteGetme(topic): Observable<any> {
+  deleteGetme(id): Observable<any> {
     let httpOptions = { headers: new HttpHeaders({'Content-Type': 'application/json'})};
-    return this.http.post<any>('http://localhost:3000/deletegetme', topic, httpOptions);
+    return this.http.post<any>('http://localhost:3000/deletegetme', id, httpOptions);
   }
 
   
