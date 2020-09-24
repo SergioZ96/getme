@@ -33,8 +33,7 @@ const appRoutes: Routes = [
   { path:'', component: HomeComponent },
   { path:'login', component: LoginComponent},
   { path:'profile', component: ProfileComponent, canActivate: [AuthGuard] },
-  { path:'views', component: ViewsComponent, canActivate: [AuthGuard] },
-  { path:'view', component: WholeviewComponent, canActivate: [AuthGuard]}
+  { path:'views', component: WholeviewComponent, canActivate: [AuthGuard]}
 ];
 
 

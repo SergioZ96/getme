@@ -1,0 +1,13 @@
+.getme-list {
+    list-style-type: none;
+    background-color: #F5F5F5;
+    
+}
+
+.getme-list li {
+    display: inline-block;
+    margin: 10px;
+    border: 1px solid grey;
+    border-radius: 7px;
+
+}

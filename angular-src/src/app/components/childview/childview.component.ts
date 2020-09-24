@@ -7,9 +7,10 @@ import { Getme, UserGetme } from '../../interfaces/getme';
   styleUrls: ['./childview.component.css']
 })
 export class ChildviewComponent implements OnInit {
-  @Input() getme_list: UserGetme[];
+  @Input() getme: UserGetme;
   // Output and EventEmitter work hand-in-hand
   @Output() delGetmeEvent = new EventEmitter<string>();
+  selectedGetme: UserGetme;
 
   deleteGetme(value: string) {
     this.delGetmeEvent.emit(value);
@@ -24,6 +25,10 @@ export class ChildviewComponent implements OnInit {
       this.getme_view.view = this.getme.view;
     }  */
 
+  }
+
+  showFullGetme(getme: UserGetme){
+    this.selectedGetme = getme;
   }
 
 }

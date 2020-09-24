@@ -17,6 +17,8 @@ export class ViewsComponent implements OnInit {
   topic: string;
   issue: string;
   view: string; 
+  isShow = true;
+  selectedGetme: UserGetme;
 
   constructor(private router: Router, public gService: GService) { }
 
@@ -39,6 +41,10 @@ export class ViewsComponent implements OnInit {
       }
       
     });
+  }
+
+  showGetmeForm(){
+    this.isShow = !this.isShow;
   }
 
   onGetmeSubmit(){
@@ -80,5 +86,9 @@ export class ViewsComponent implements OnInit {
         
       }
     });
+  }
+
+  showFullGetme(getme: UserGetme){
+    this.selectedGetme = getme;
   }
 }

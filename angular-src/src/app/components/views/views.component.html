@@ -1,9 +1,10 @@
+<button (click)="showGetmeForm()">+Getme</button>
 <h1>Views</h1>
 <p>
     Here, you can create different topics, or GetMe's, covering certain beliefs on issues that matter to you most.
 </p>
 <!-- <input type="button" value="New Getme" class="new_getme"> -->
-<form (submit)="onGetmeSubmit()">
+<form *ngIf="!isShow" (submit)="onGetmeSubmit()">
     <div class="form-group">
         <label>Topic</label>
         <input type="text" [(ngModel)]="topic" name="topic" class="form-control">
@@ -20,5 +21,14 @@
 </form>
 <br>
 <!-- $event is the child event payload-->
-<app-childview [getme_list]='getme_list' (delGetmeEvent)="delGetme($event)"> </app-childview>
+<ul class="getme-list">
+    <li *ngFor="let getme of getme_list" [class.selected]="getme === selectedGetme" (click)="showFullGetme(getme)">
+        <h2>{{getme.topic}}</h2>
+        
+        <img (click)="delGetme(getme._id)" class="float-right" src="assets/img/delete-24px.svg" alt="delete">
+    </li>
+</ul>
+
+<app-childview [getme]='selectedGetme'> </app-childview>
+
 

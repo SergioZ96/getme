@@ -1,10 +1,19 @@
-<div *ngFor="let getme of getme_list">   
-    <a [routerLink]="['/view']" [state]="{topic: getme.topic,issue: getme.issue,view: getme.view}" >
-        <h2>{{ getme.topic }}</h2><br>
+<!--<div>
+    <div *ngFor="let getme of getme_list" [class.selected]="getme === selectedGetme" (click)="showFullGetme(getme)">  
+        <h2 >{{ getme.topic }}</h2><br>
+        <div *ngIf="selectedGetme">
+            <h3>{{ selectedGetme.issue }}</h3><br>
+            <p>{{ selectedGetme.view }}</p>
+        </div>
         
-        <!--<h3>{{ getme.issue }}</h3><br>
-        <p>{{ getme.view }}</p>-->
-    </a>
-    <h3>{{ getme._id }}</h3>
-    <img (click)="deleteGetme(getme._id)" class="float-right" src="assets/img/delete-24px.svg" alt="delete">    
-</div> 
+        
+        
+        <img (click)="deleteGetme(getme._id)" class="float-right" src="assets/img/delete-24px.svg" alt="delete">
+    </div>    
+</div> --> 
+
+<div *ngIf="getme">
+    <h2>{{ getme.topic }}</h2>
+    <h3>{{ getme.issue }}</h3>
+    <p>{{ getme.view }}</p>
+</div>
