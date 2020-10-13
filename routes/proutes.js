@@ -109,16 +109,31 @@ router.post('/addgetme', passport.authenticate('jwt', {session: false}), (req,re
 
 });
 
+// getme edit route which updates a getme
+router.put('/editgetme/:id', passport.authenticate('jwt', {session: false}), (req, res) => {
+  User.updateOne({'_id': req.user._id, 'getme_views._id': req.params.id}, {$set: {'getme_views.$.topic': req.body.topic, 'getme_views.$.issue': req.body.issue, 'getme_views.$.view': req.body.view}}, 
+    (err, result) => {
+      if(err){
+        res.send(err);
+      }
+      else{
+        console.log(result);
+        res.json({success: true});
+      }
+    }
+  );
+});
+
 // getme delete route which deletes on the basis of getme _id
-router.post('/deletegetme', passport.authenticate('jwt', {session: false}), (req, res) => {
-  console.log(req.body._id);
-  User.updateOne({_id: req.user._id}, { $pull: { getme_views: {_id: req.body._id}}},
+router.delete('/deletegetme/:id', passport.authenticate('jwt', {session: false}), (req, res) => {
+  console.log(req.params.id);
+  User.updateOne({_id: req.user._id}, { $pull: { getme_views: {_id: req.params.id}}},
     (err, result) => {
       if(err){
         res.send(err);
       }
       else {
-        res.json({success: true, _id: req.body._id});
+        res.json({success: true, _id: req.params.id});
       }
     }
   );

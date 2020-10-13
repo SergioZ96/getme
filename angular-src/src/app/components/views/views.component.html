@@ -25,10 +25,9 @@
     <li *ngFor="let getme of getme_list" [class.selected]="getme === selectedGetme" (click)="showFullGetme(getme)">
         <h2>{{getme.topic}}</h2>
         
-        <img (click)="delGetme(getme._id)" class="float-right" src="assets/img/delete-24px.svg" alt="delete">
     </li>
 </ul>
 
-<app-childview [getme]='selectedGetme'> </app-childview>
+<app-childview [getme]='selectedGetme' (delGetmeEvent)="delGetme($event)" (updateGetmeEvent)="editGetme($event)"> </app-childview>
 
 

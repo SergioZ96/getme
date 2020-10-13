@@ -9,5 +9,8 @@
     margin: 10px;
     border: 1px solid grey;
     border-radius: 7px;
+}
 
+.getme-list li :hover {
+    cursor: pointer;
 }

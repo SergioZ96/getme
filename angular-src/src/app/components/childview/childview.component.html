@@ -13,7 +13,28 @@
 </div> --> 
 
 <div *ngIf="getme">
-    <h2>{{ getme.topic }}</h2>
-    <h3>{{ getme.issue }}</h3>
-    <p>{{ getme.view }}</p>
+    
+    <img (click)="deleteGetme(getme._id)" class="float-right" src="assets/img/delete-24px.svg" alt="delete">
+    <button *ngIf="!needToUpdate" (click)="update_button()" class="float-right">Update</button>
+    <button *ngIf="needToUpdate" (click)="save_button()" class="float-right">Save</button>
+    <div *ngIf="!needToUpdate">
+        <h2>{{ getme.topic }}</h2>
+        <h3>{{ getme.issue }}</h3>
+        <p>{{ getme.view }}</p>
+    </div>
+    <form *ngIf="needToUpdate">
+        <div class="form-group">
+            <label>Topic</label>
+            <input type="text" [(ngModel)]="upd_topic" name="upd_topic" class="form-control"/>
+        </div>
+        <div class="form-group">
+            <label>Is there a current issue?</label>
+            <input type="text" [(ngModel)]="upd_issue" name="upd_issue"  class="form-control"/>
+        </div>
+        <div class="form-group">
+            <label>What is your view on this topic?</label>
+            <input type="text" style="height:200px;font-size:14px;" [(ngModel)]="upd_view" name="upd_view" class="form-control"/>
+        </div>  
+        
+    </form>
 </div>

@@ -22,14 +22,12 @@ export class ViewsComponent implements OnInit {
 
   constructor(private router: Router, public gService: GService) { }
 
-  ngOnInit(): void {
-    // Here is where we will use authService to retrieve the user's getme's from the database
-    // by subscribing to an Observable
+  loadList(){
     this.gService.loadGetme().subscribe(data => {
       if(data.success){
-      
+        
         for(var item of data.getme_views.getme_views){
-          
+        
           this.usergetme = {
             _id: item._id,
             topic: item.topic,
@@ -38,9 +36,16 @@ export class ViewsComponent implements OnInit {
           };
           this.getme_list.push(this.usergetme); 
         }
+        
       }
       
     });
+  }
+
+  ngOnInit(): void {
+    // Here is where we will use gService to retrieve the user's getme's from the database
+    // by subscribing to an Observable
+    if(this.getme_list.length == 0) this.loadList();
   }
 
   showGetmeForm(){
@@ -72,20 +77,39 @@ export class ViewsComponent implements OnInit {
       }
     });
 
+    //refreshes page after getme is added, in order for a getme to be deleted later
+    window.location.reload();
+    //this.router.navigate(['/views']);
+
+  }
+
+  // receives an input from childview to update and use editGetme to save new getme to backend
+  editGetme(upd_getme){
+    this.gService.editGetme(upd_getme).subscribe(data => {
+      if(data.success) {
+        console.log("Updated Getme");
+      }
+    });
   }
   
 
   delGetme(_id: string) {
-    // filtering out the the topic of the getme that we want to delete and returns a new getme list
-    this.getme_list = this.getme_list.filter(getme => getme._id !== _id);
-
+    /* window.location.reload();
+    this.router.navigate(['/views']); */
     // put topic in JSON because Express by default accepts requests with content-types: 'application/json', 'application/x-www-form-urlencoded', 'multipart/form-data'
-    this.gService.deleteGetme({_id: _id}).subscribe(data => {
+    this.gService.deleteGetme(_id).subscribe(data => {
       if(data.success) {
         console.log("Deleted Getme");
         
+        // filtering out the the topic of the getme that we want to delete and returns a new getme list
+        this.getme_list = this.getme_list.filter(getme => getme._id !== data._id);
+
+        
+        //this.getme_list = []; //emptying getme_list
+        //this.loadList();      //reloading new list
       }
     });
+
   }
 
   showFullGetme(getme: UserGetme){
