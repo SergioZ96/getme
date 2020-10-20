@@ -58,8 +58,4 @@ export class ChildviewComponent implements OnInit {
 
   }
 
-  showFullGetme(getme: UserGetme){
-    this.selectedGetme = getme;
-  }
-
 }

@@ -1,5 +1,7 @@
 <div class="tab-content" id="v-tabContent">
-    <div class="fade" role="tabpanel">
-        <p>Hello!</p>
-    </div>
+    <h1>Picture Upload</h1>
+    <form enctype="multipart/form-data" (submit)="submitFile()">
+        <input type="file" name="profile_photo" id="profile_photo" (change)="fileUpload($event.target.files)">
+        <input type="submit" value="Submit">
+    </form>
 </div>

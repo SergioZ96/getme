@@ -1,14 +1,39 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
-const flash = require('connect-flash');
+const conn = require('../config/database');
+const mongoose = require('mongoose');
+//const flash = require('connect-flash');
+const multer = require('multer');
+// GridFS storage engine for Multer to store uploaded files directly to MongoDb
+const GridFSStorage = require('multer-gridfs-storage');
+const Grid = require('gridfs-stream');
+//const gfs = Grid(conn.db);
 const User = require('../models/user');
 const { response } = require('express');
 const generateAccessToken = require('../token').generateAccessToken;
 
 router.use(require('cookie-parser')());
+ /* 
+const storage = new GridFSStorage({ 
+  db: conn,
+  file: (req, file) => {
+    // instead of an object a string is returned
+    return 'file_' + Date.now()
+  }
+}); */
+// mainly used for testing the handling of form data, works so far
+const upload = multer({ dest: 'routes/uploads/'});
+//const upload  = multer({ storage });
+/* 
+let gfs;
+conn.once('open', () => {
+  // Initialize stream
+  gfs = Grid(conn.db, mongoose.mongo);
+  gfs.collection('uploads');
+});  */
 
-
+// Create storage engine
 
 
 router.get('/login', (req,res) => {
@@ -109,7 +134,7 @@ router.post('/addgetme', passport.authenticate('jwt', {session: false}), (req,re
 
 });
 
-// getme edit route which updates a getme
+// getme edit route which updates a getme 
 router.put('/editgetme/:id', passport.authenticate('jwt', {session: false}), (req, res) => {
   User.updateOne({'_id': req.user._id, 'getme_views._id': req.params.id}, {$set: {'getme_views.$.topic': req.body.topic, 'getme_views.$.issue': req.body.issue, 'getme_views.$.view': req.body.view}}, 
     (err, result) => {
@@ -151,6 +176,44 @@ router.get('/loadgetme', passport.authenticate('jwt', {session: false}), async f
     res.json({success: true, getme_views: result});
   }
 });
+
+router.post('/upload', upload.single('profile_photo'), passport.authenticate('jwt', {session: false}), (req,res) => {
+  console.log(req.file);
+  res.json({success: true});
+});
+
+/** 
+// Creating a storage element
+let storage = GridFsStorage({
+  gfs : gfs,
+  filename: (req, file, cb) => {
+    let date = Date.now();
+
+    cb(null, file.fieldname + '-' + date + '.');
+  },
+
+  // Additional meta data that you want to store
+  metadata: function(req, file, cb) {
+    cb(null, {originalname: file.originalname });
+  },
+  root: 'ctFiles' // Root collection name
+});
+
+let upload = multer({
+  storage: storage
+}).single('file');
+
+// Route for the file upload
+router.post('/upload', (req, res) => {
+  upload(req, res, (err) => {
+    if(err) {
+      res.json({error_code: 1, err_desc: err});
+      return;
+    }
+    res.json({error_code: 0, error_desc: null, file_uploaded: true});
+  });
+});
+*/
 
 
 

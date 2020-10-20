@@ -1,22 +1,11 @@
-<!--<div>
-    <div *ngFor="let getme of getme_list" [class.selected]="getme === selectedGetme" (click)="showFullGetme(getme)">  
-        <h2 >{{ getme.topic }}</h2><br>
-        <div *ngIf="selectedGetme">
-            <h3>{{ selectedGetme.issue }}</h3><br>
-            <p>{{ selectedGetme.view }}</p>
-        </div>
-        
-        
-        
-        <img (click)="deleteGetme(getme._id)" class="float-right" src="assets/img/delete-24px.svg" alt="delete">
-    </div>    
-</div> --> 
+
 
 <div *ngIf="getme">
     
     <img (click)="deleteGetme(getme._id)" class="float-right" src="assets/img/delete-24px.svg" alt="delete">
     <button *ngIf="!needToUpdate" (click)="update_button()" class="float-right">Update</button>
     <button *ngIf="needToUpdate" (click)="save_button()" class="float-right">Save</button>
+    <button *ngIf="needToUpdate" (click)="needToUpdate = false;" class="float-right">Cancel</button>
     <div *ngIf="!needToUpdate">
         <h2>{{ getme.topic }}</h2>
         <h3>{{ getme.issue }}</h3>
