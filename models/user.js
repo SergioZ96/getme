@@ -7,6 +7,11 @@ const UserSchema = mongoose.Schema({
     firstname: String,
     lastname: String,
     email: String,
+    bio: String,
+    prof_photo_ids: [{
+        image_id: String,
+        current: Boolean
+    }],
     getme_views: [{
         topic: String,
         issue: String,

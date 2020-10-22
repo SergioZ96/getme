@@ -12,7 +12,12 @@ export class FileService {
   postFile(file): Observable<any> {
     const formData: FormData = new FormData();
     formData.append('profile_photo', file, file.name);
-    return this.http.post<any>('http://localhost:3000/upload', formData);
+    return this.http.post<any>('http://localhost:3000/upload_profile_pic', formData);
+  }
+
+  getProfile(): Observable<any> {
+    let httpOptions = { headers: new HttpHeaders({'Content-Type': 'application/json'})};
+    return this.http.get<any>('http://localhost:3000/profile', httpOptions);
   }
 
 }

@@ -22,18 +22,32 @@ const storage = new GridFSStorage({
     return 'file_' + Date.now()
   }
 }); */
+
+
 // mainly used for testing the handling of form data, works so far
-const upload = multer({ dest: 'routes/uploads/'});
-//const upload  = multer({ storage });
-/* 
+//const upload = multer({ dest: 'routes/uploads/'});
+
+
 let gfs;
 conn.once('open', () => {
   // Initialize stream
   gfs = Grid(conn.db, mongoose.mongo);
-  gfs.collection('uploads');
-});  */
+  gfs.collection('prof_photos');
+}); 
 
 // Create storage engine
+const storage = new GridFSStorage({ 
+  db: conn,
+  file: (req, file) => {
+    if(file.fieldname === 'profile_photo'){
+      return {
+        bucketName: 'prof_photos'
+      };
+    }
+  } 
+});
+
+const upload  = multer({ storage });
 
 
 router.get('/login', (req,res) => {
@@ -96,7 +110,7 @@ router.get('/auth/twitter/callback', (req, res, next) => {
 
 
 // Needs to be a protected route
-router.get('/profile', passport.authenticate('jwt', {session: false }), (req,res) => {
+router.get('/profile_test', passport.authenticate('jwt', {session: false }), (req,res) => {
   res.json({ success: true, msg: "hello there !"});
 });
 
@@ -165,7 +179,7 @@ router.delete('/deletegetme/:id', passport.authenticate('jwt', {session: false})
 });
 
 
-router.get('/loadgetme', passport.authenticate('jwt', {session: false}), async function(req,res){
+router.get('/loadgetme', passport.authenticate('jwt', {session: false}), async(req,res) =>{
   // Here we have to pass the user's getme's from the db to the client
   const result = await User.findById(req.user._id, 'getme_views').exec();
   if(result === null){
@@ -177,44 +191,52 @@ router.get('/loadgetme', passport.authenticate('jwt', {session: false}), async f
   }
 });
 
-router.post('/upload', upload.single('profile_photo'), passport.authenticate('jwt', {session: false}), (req,res) => {
+// needs to add the image file to the prof_photos collection
+router.post('/upload_profile_pic', upload.single('profile_photo'), passport.authenticate('jwt', {session: false}), (req,res) => {
   console.log(req.file);
-  res.json({success: true});
-});
-
-/** 
-// Creating a storage element
-let storage = GridFsStorage({
-  gfs : gfs,
-  filename: (req, file, cb) => {
-    let date = Date.now();
-
-    cb(null, file.fieldname + '-' + date + '.');
-  },
-
-  // Additional meta data that you want to store
-  metadata: function(req, file, cb) {
-    cb(null, {originalname: file.originalname });
-  },
-  root: 'ctFiles' // Root collection name
-});
-
-let upload = multer({
-  storage: storage
-}).single('file');
-
-// Route for the file upload
-router.post('/upload', (req, res) => {
-  upload(req, res, (err) => {
-    if(err) {
-      res.json({error_code: 1, err_desc: err});
-      return;
+  User.updateOne({_id: req.user._id}, { $push: { prof_photo_ids : [{ image_id: req.file.id.toString(), current: true}]}},
+    (err, result) => {
+      if(err) {
+        res.send(err);
+      }
+      else{
+        // aggregate pipeline to retrieve size of getme array to retrieve last element's (newly added getme) _id
+        /* const array_size = User.aggregate()
+                            .match({_id: req.user._id})
+                            .project({
+                              getme_views: {$size:"$getme_views"}
+                            })
+                            .exec((err, getme_views) => {
+                              const array_size = getme_views.length;
+                              const newgetme_id = getme_views[array_size - 1]._id;
+                              res.json({success: true, new_id: newgetme_id}); // sending the new _id to front end
+                            }); 
+          */
+        res.json({success: true});
+      }
     }
-    res.json({error_code: 0, error_desc: null, file_uploaded: true});
-  });
+  );
+  //res.json({success: true});
 });
-*/
 
+// get profile of user along with profile photos
+router.get('/profile', passport.authenticate('jwt', {session: false}), async (req,res) => {
+  
+  // First we need to get the user profile fields (all fields besides the getmes)
+  const profile = await User.findById(req.user._id, 'firstname lastname email bio prof_photo_ids').exec();
+  console.log(profile);
+  //res.json({success: true, profile: profile});
+  /* gfs.files.find().toArray((err, files) => {
+    
+    files.forEach((file))
+
+  }) */
+  // we will use this to stream the image file from the database
+  /* gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
+    
+  });  */
+  //res.status(200);
+});
 
 
 module.exports = router;
