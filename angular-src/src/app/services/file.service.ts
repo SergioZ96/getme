@@ -16,8 +16,12 @@ export class FileService {
   }
 
   getProfile(): Observable<any> {
-    let httpOptions = { headers: new HttpHeaders({'Content-Type': 'application/json'})};
-    return this.http.get<any>('http://localhost:3000/profile', httpOptions);
+    //let httpOptions = { headers: new HttpHeaders({'Content-Type': 'application/json'})};
+    return this.http.get<any>('http://localhost:3000/profile');
+  }
+
+  getProfileImages(): Observable<any> {
+    return this.http.get<any>('http://localhost:3000/profile_images');
   }
 
 }

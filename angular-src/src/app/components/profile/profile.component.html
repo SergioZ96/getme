@@ -4,4 +4,6 @@
         <input type="file" name="profile_photo" id="profile_photo" (change)="fileUpload($event.target.files)">
         <input type="submit" value="Submit">
     </form>
+
+    <img *ngIf="isImage" src="http://localhost:3000/profile_images" >
 </div>

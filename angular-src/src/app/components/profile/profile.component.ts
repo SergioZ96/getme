@@ -13,6 +13,7 @@ import { FileService } from '../../services/file.service';
 export class ProfileComponent implements OnInit {
 
   fileToUpload: File;
+  isImage = false;
 
   constructor(
     private authService: AuthService,
@@ -23,7 +24,9 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
     this.fileService.getProfile().subscribe(data => {
       if(data.success){
-        console.log(data.profile);
+        
+        this.isImage = true;
+        
       }
     });
   } 

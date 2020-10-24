@@ -3,6 +3,7 @@ const router = express.Router();
 const passport = require('passport');
 const conn = require('../config/database');
 const mongoose = require('mongoose');
+const mongodb = require('mongodb'); // necessary to use ObjectId() to turn string into mongodb object id
 //const flash = require('connect-flash');
 const multer = require('multer');
 // GridFS storage engine for Multer to store uploaded files directly to MongoDb
@@ -26,6 +27,8 @@ const storage = new GridFSStorage({
 
 // mainly used for testing the handling of form data, works so far
 //const upload = multer({ dest: 'routes/uploads/'});
+
+let image_ids;
 
 
 let gfs;
@@ -224,8 +227,11 @@ router.get('/profile', passport.authenticate('jwt', {session: false}), async (re
   
   // First we need to get the user profile fields (all fields besides the getmes)
   const profile = await User.findById(req.user._id, 'firstname lastname email bio prof_photo_ids').exec();
-  console.log(profile);
-  //res.json({success: true, profile: profile});
+  //console.log(profile);
+  image_ids = profile.prof_photo_ids;
+  //req.profile = profile;
+  
+  res.json({success: true, profile: profile});
   /* gfs.files.find().toArray((err, files) => {
     
     files.forEach((file))
@@ -236,6 +242,17 @@ router.get('/profile', passport.authenticate('jwt', {session: false}), async (re
     
   });  */
   //res.status(200);
+});
+
+router.get('/profile_images', /* passport.authenticate('jwt', {session: false}), */ (req, res) => {
+  gfs.files.findOne({ _id: mongodb.ObjectId(image_ids[0].image_id)}, (err, file) => {
+    
+    console.log(file);
+    const readstream = gfs.createReadStream(file.filename);
+    //res.json({success: true, image: file});
+    //res.set('Content-Type', file.contentType);
+    return readstream.pipe(res);
+  });
 });
 
 
