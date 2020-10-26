@@ -229,30 +229,28 @@ router.get('/profile', passport.authenticate('jwt', {session: false}), async (re
   const profile = await User.findById(req.user._id, 'firstname lastname email bio prof_photo_ids').exec();
   //console.log(profile);
   image_ids = profile.prof_photo_ids;
+  
   //req.profile = profile;
   
   res.json({success: true, profile: profile});
-  /* gfs.files.find().toArray((err, files) => {
-    
-    files.forEach((file))
-
-  }) */
-  // we will use this to stream the image file from the database
-  /* gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
-    
-  });  */
-  //res.status(200);
+  
 });
 
-router.get('/profile_images', /* passport.authenticate('jwt', {session: false}), */ (req, res) => {
-  gfs.files.findOne({ _id: mongodb.ObjectId(image_ids[0].image_id)}, (err, file) => {
-    
-    console.log(file);
-    const readstream = gfs.createReadStream(file.filename);
-    //res.json({success: true, image: file});
-    //res.set('Content-Type', file.contentType);
-    return readstream.pipe(res);
-  });
+router.get('/profile_images/:id', /* passport.authenticate('jwt', {session: false}), */ (req, res) => {
+  if(image_ids === undefined || image_ids.length == 0){
+    return;
+  }
+  else{
+    //gfs.files.findOne({ _id: mongodb.ObjectId(image_ids[0].image_id)}, (err, file) => {
+    gfs.files.findOne({ _id: mongodb.ObjectId(req.params.id)}, (err, file) => {
+      console.log(file);
+      const readstream = gfs.createReadStream(file.filename);
+      //res.json({success: true, image: file});
+      //res.set('Content-Type', file.contentType);
+      return readstream.pipe(res);
+    });
+  }
+  
 });
 
 

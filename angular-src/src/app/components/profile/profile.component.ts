@@ -14,6 +14,10 @@ export class ProfileComponent implements OnInit {
 
   fileToUpload: File;
   isImage = false;
+  changePic = false;
+  photoArray: Array<any>;
+  imageSrc = "../../../assets/img/default-profile.png";
+
 
   constructor(
     private authService: AuthService,
@@ -23,10 +27,16 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.fileService.getProfile().subscribe(data => {
-      if(data.success){
-        
-        this.isImage = true;
-        
+      console.log("we are here");
+      this.photoArray = data.profile.prof_photo_ids;
+      for(let i = 0; i < this.photoArray.length; i++){
+        console.log(this.photoArray[i].current)
+        if(this.photoArray[i].current){
+          //create an image element with the image id as req param 
+          //or modify the path for the one that we already have
+          this.imageSrc = `http://localhost:3000/profile_images/${this.photoArray[i].image_id}`;
+          
+        }
       }
     });
   } 
