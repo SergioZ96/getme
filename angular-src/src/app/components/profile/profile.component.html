@@ -1,6 +1,7 @@
 <div class="tab-content" id="v-tabContent">
     <div *ngFor="let photo of photoArray">
         <img (click)="chooseCurrent(photo.image_id)" *ngIf="photo.current || changePic" src="http://localhost:3000/profile_images/{{photo.image_id}}" style="width:150px;height:150px;">
+        <button (click)="deletePhoto(photo.image_id)" *ngIf="changePic">Delete</button>
     </div>
 
 

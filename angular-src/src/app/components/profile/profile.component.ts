@@ -63,10 +63,19 @@ export class ProfileComponent implements OnInit {
     }
     this.fileService.currentImage(photoId).subscribe(data => {
       if(data.success){
-        console.log('Updated Profile Picture');
         window.location.reload();
+        console.log('Updated Profile Picture');
+        
       }
       
+    });
+  }
+
+  deletePhoto(photoId){
+    this.fileService.deleteImage(photoId).subscribe(data => {
+      if(data.success){
+        console.log('Deleted the image');
+      }
     });
   }
 }

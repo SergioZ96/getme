@@ -277,4 +277,23 @@ router.put('/update_current/:photoID', passport.authenticate('jwt', {session: fa
   );
 });
 
+router.delete('/delete_photo/:photoId', passport.authenticate('jwt', {session: false}), (req,res) => {
+  gfs.remove({ _id: mongodb.ObjectId(req.params.id), root: 'prof_photos'}, (err, gridStore) => {
+    if(err){
+      return res.status(404).json({ err: err});
+    }
+    User.updateOne({_id: req.user._id}, { $pull: { prof_photo_ids: {image_id: req.params.photoId }}},
+      (err, result) => {
+        if(err){
+          res.send(err);
+        }
+        else{
+          res.json({success: true});
+        }
+      }
+    )
+    //res.json({success: true});
+  });
+});
+
 module.exports = router;

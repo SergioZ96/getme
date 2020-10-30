@@ -28,5 +28,8 @@ export class FileService {
     return this.http.put<any>(`http://localhost:3000/update_current/${photoID}`, photoID);
   }
 
+  deleteImage(photoID): Observable<any> {
+    return this.http.delete<any>(`http://localhost:3000/delete_photo/${photoID}`);
+  }
 
 }
