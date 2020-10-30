@@ -12,6 +12,16 @@
         <input type="submit" value="Submit">
         <button (click)="changePic=false;">Cancel</button>
     </form>
+
+    <div>
+        <button *ngIf="!showBioform" (click)="showBioform=true">+Bio</button>
+        <form *ngIf="showBioform" (submit)="setBio()">
+            <input type="text" [(ngModel)]="bio" name="bio">
+            <input (click)="showBioform=false" type="submit" value="Submit">
+        </form>
+        
+        <p>{{ bio }}</p>
+    </div>
     
 
     

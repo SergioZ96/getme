@@ -296,4 +296,17 @@ router.delete('/delete_photo/:photoId', passport.authenticate('jwt', {session: f
   });
 });
 
+router.post('/bio', passport.authenticate('jwt', {session: false}), (req,res) => {
+  User.updateOne({_id: req.user._id}, { $set: {bio: req.body.bio}},
+    (err,result) => {
+      if(err){
+        res.send(err);
+      }
+      else{
+        res.json({success: true});
+      }
+    }
+  );
+});
+
 module.exports = router;

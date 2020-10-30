@@ -32,4 +32,9 @@ export class FileService {
     return this.http.delete<any>(`http://localhost:3000/delete_photo/${photoID}`);
   }
 
+  postBio(bio): Observable<any> {
+    const httpOptions = { headers: new HttpHeaders({'Content-Type': 'application/json'})};
+    return this.http.post<any>('http://localhost:3000/bio', {bio: bio}, httpOptions);
+  }
+
 }

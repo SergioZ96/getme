@@ -15,7 +15,9 @@ export class ProfileComponent implements OnInit {
   fileToUpload: File;
   isImage = false;
   changePic = false;
+  showBioform = false;
   photoArray: Array<any>;
+  bio: string;
   imageSrc = "../../../assets/img/default-profile.png";
 
 
@@ -28,17 +30,10 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
     this.fileService.getProfile().subscribe(data => {
       console.log("we are here");
+      this.bio = data.profile.bio;
       this.photoArray = data.profile.prof_photo_ids;
       // we will loop through this photo_array in the front end 
-      /* for(let i = 0; i < this.photoArray.length; i++){
-        console.log(this.photoArray[i].current)
-        if(this.photoArray[i].current){
-          //create an image element with the image id as req param 
-          //or modify the path for the one that we already have
-          this.imageSrc = `http://localhost:3000/profile_images/${this.photoArray[i].image_id}`;
-          
-        }
-      } */
+      
     });
   } 
 
@@ -74,7 +69,16 @@ export class ProfileComponent implements OnInit {
   deletePhoto(photoId){
     this.fileService.deleteImage(photoId).subscribe(data => {
       if(data.success){
+        window.location.reload();
         console.log('Deleted the image');
+      }
+    });
+  }
+
+  setBio(){
+    this.fileService.postBio(this.bio).subscribe(data => {
+      if(data.success){
+        console.log("We have the bio");
       }
     });
   }

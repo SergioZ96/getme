@@ -25,30 +25,6 @@ export class AuthService {
     this.storeUserData(cookieValue.jwt, cookieValue.user);
     this.cs.delete('jwt_user');
   }
-  /*  
-  auth_User(): Observable<any> {
-    let httpOptions = { headers: new HttpHeaders({'Content-Type': 'application/json'})};
-    return this.http.post<any>('http://localhost:3000/auth', httpOptions);
-  }  */
-
-  //getProfile(): Observable<any>{
-
-  //}
-  /* addGetme(getme): Observable<any> {
-    let httpOptions = { headers: new HttpHeaders({'Content-Type': 'application/json'})};
-    return this.http.post<any>('http://localhost:3000/addgetme', getme, httpOptions);
-  }
-
-  loadGetme(): Observable<any> {
-    let httpOptions = { headers: new HttpHeaders({'Content-Type': 'application/json'})};
-    return this.http.get<any>('http://localhost:3000/loadgetme', httpOptions);
-  }
-
-  deleteGetme(id): Observable<any> {
-    let httpOptions = { headers: new HttpHeaders({'Content-Type': 'application/json'})};
-    return this.http.post<any>('http://localhost:3000/deletegetme', id, httpOptions);
-  } */
-
   
   storeUserData(token, user){
     localStorage.setItem('jwt', token);
