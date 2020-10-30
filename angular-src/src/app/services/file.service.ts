@@ -24,4 +24,9 @@ export class FileService {
     return this.http.get<any>('http://localhost:3000/profile_images');
   }
 
+  currentImage(photoID): Observable<any> {
+    return this.http.put<any>(`http://localhost:3000/update_current/${photoID}`, photoID);
+  }
+
+
 }

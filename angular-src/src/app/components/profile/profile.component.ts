@@ -29,7 +29,8 @@ export class ProfileComponent implements OnInit {
     this.fileService.getProfile().subscribe(data => {
       console.log("we are here");
       this.photoArray = data.profile.prof_photo_ids;
-      for(let i = 0; i < this.photoArray.length; i++){
+      // we will loop through this photo_array in the front end 
+      /* for(let i = 0; i < this.photoArray.length; i++){
         console.log(this.photoArray[i].current)
         if(this.photoArray[i].current){
           //create an image element with the image id as req param 
@@ -37,7 +38,7 @@ export class ProfileComponent implements OnInit {
           this.imageSrc = `http://localhost:3000/profile_images/${this.photoArray[i].image_id}`;
           
         }
-      }
+      } */
     });
   } 
 
@@ -53,5 +54,19 @@ export class ProfileComponent implements OnInit {
       }
     });
     this.fileToUpload = null;
+  }
+
+  chooseCurrent(photoId){
+    let status = this.photoArray.find(photo => photo.image_id === photoId);
+    if(status.current){
+      return;
+    }
+    this.fileService.currentImage(photoId).subscribe(data => {
+      if(data.success){
+        console.log('Updated Profile Picture');
+        window.location.reload();
+      }
+      
+    });
   }
 }

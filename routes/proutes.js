@@ -253,5 +253,28 @@ router.get('/profile_images/:id', /* passport.authenticate('jwt', {session: fals
   
 });
 
+router.put('/update_current/:photoID', passport.authenticate('jwt', {session: false}), (req,res) => {
+  // Look through the profile photo id array to see which object has field current : true, and we change it to false
+  User.updateOne({'_id': req.user._id, 'prof_photo_ids.current': true}, {$set: {'prof_photo_ids.$.current': false}},
+    (err, result) => {
+      if(err){
+        res.send(err);
+      }
+      else{
+        // then we update the photo id object that was passed throught the request and turn its current: true to indicate it is the current profile photo
+        User.updateOne({'_id': req.user._id, 'prof_photo_ids.image_id': req.params.photoID}, { $set: {'prof_photo_ids.$.current': true}},
+          (err,result) => {
+            if(err){
+              res.send(err);
+            }
+            else{
+              res.json({success: true});
+            }
+          }
+        );
+      }
+    }
+  );
+});
 
 module.exports = router;
