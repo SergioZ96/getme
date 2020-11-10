@@ -1,33 +1,35 @@
-<button (click)="showGetmeForm()">+Getme</button>
-<h1>Views</h1>
-<p>
-    Here, you can create different topics, or GetMe's, covering certain beliefs on issues that matter to you most.
-</p>
-<!-- <input type="button" value="New Getme" class="new_getme"> -->
-<form *ngIf="!isShow" (submit)="onGetmeSubmit()">
-    <div class="form-group">
-        <label>Topic</label>
-        <input type="text" [(ngModel)]="topic" name="topic" class="form-control">
-    </div>
-    <div class="form-group">
-        <label>Is There A Current Issue?</label>
-        <input type="text" [(ngModel)]="issue" name="issue" class="form-control">
-    </div>
-    <div class="form-group">
-        <label>What Is your View on this topic?</label>
-        <input type="text" style="height:200px;font-size:14px;" [(ngModel)]="view" name="view" class="form-control">
-    </div>
-    <input type="submit" class="btn btn-primary" value="Submit">
-</form>
-<br>
-<!-- $event is the child event payload-->
-<ul class="getme-list">
-    <li *ngFor="let getme of getme_list" [class.selected]="getme === selectedGetme" (click)="showFullGetme(getme)">
-        <h2>{{getme.topic}}</h2>
-        
-    </li>
-</ul>
 
-<app-childview [getme]='selectedGetme' (delGetmeEvent)="delGetme($event)" (updateGetmeEvent)="editGetme($event)"> </app-childview>
+<div class="tab-pane fade show" id="v-pills-views" role="tabpanel" aria-labelledby="v-pills-views-tab">
+    <button (click)="showGetmeForm()">+Getme</button>
+    <h1>Views</h1>
+    <p>
+        Here, you can create different topics, or GetMe's, covering certain beliefs on issues that matter to you most.
+    </p>
+    <!-- <input type="button" value="New Getme" class="new_getme"> -->
+    <form *ngIf="!isShow" (submit)="onGetmeSubmit()">
+        <div class="form-group">
+            <label>Topic</label>
+            <input type="text" [(ngModel)]="topic" name="topic" class="form-control">
+        </div>
+        <div class="form-group">
+            <label>Is There A Current Issue?</label>
+            <input type="text" [(ngModel)]="issue" name="issue" class="form-control">
+        </div>
+        <div class="form-group">
+            <label>What Is your View on this topic?</label>
+            <input type="text" style="height:200px;font-size:14px;" [(ngModel)]="view" name="view" class="form-control">
+        </div>
+        <input type="submit" class="btn btn-primary" value="Submit">
+    </form>
+    <br>
+    <!-- $event is the child event payload-->
+    <ul class="getme-list">
+        <li *ngFor="let getme of getme_list" [class.selected]="getme === selectedGetme" (click)="showFullGetme(getme)">
+            <h2>{{getme.topic}}</h2>
+            
+        </li>
+    </ul>
 
+    <app-childview [getme]='selectedGetme' (delGetmeEvent)="delGetme($event)" (updateGetmeEvent)="editGetme($event)"> </app-childview>
 
+</div>

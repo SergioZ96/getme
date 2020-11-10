@@ -3,26 +3,16 @@ const router = express.Router();
 const passport = require('passport');
 const conn = require('../config/database');
 const mongoose = require('mongoose');
-const mongodb = require('mongodb'); // necessary to use ObjectId() to turn string into mongodb object id
-//const flash = require('connect-flash');
-const multer = require('multer');
-// GridFS storage engine for Multer to store uploaded files directly to MongoDb
-const GridFSStorage = require('multer-gridfs-storage');
-const Grid = require('gridfs-stream');
-//const gfs = Grid(conn.db);
+const mongodb = require('mongodb');                       /* necessary to use ObjectId() to turn string into mongodb object id */
+const multer = require('multer');                         /* middleware which adds a body and file(s) object to the request object for handling multipart/form-data */
+const GridFSStorage = require('multer-gridfs-storage');   /* GridFS storage engine for Multer to store uploaded files directly to MongoDb */
+const Grid = require('gridfs-stream');                    /* allows us to easily stream files to and from MongoDB GridFS */
 const User = require('../models/user');
 const { response } = require('express');
 const generateAccessToken = require('../token').generateAccessToken;
+//const flash = require('connect-flash');
 
 router.use(require('cookie-parser')());
- /* 
-const storage = new GridFSStorage({ 
-  db: conn,
-  file: (req, file) => {
-    // instead of an object a string is returned
-    return 'file_' + Date.now()
-  }
-}); */
 
 
 // mainly used for testing the handling of form data, works so far
@@ -33,12 +23,17 @@ let image_ids;
 
 let gfs;
 conn.once('open', () => {
-  // Initialize stream
+  /* Initialize stream with our db and mongoose, as well as specify the collection we are working with */
   gfs = Grid(conn.db, mongoose.mongo);
   gfs.collection('prof_photos');
 }); 
 
-// Create storage engine
+
+
+/* Create our storage object with a specified configuration 
+    - db:   database connection
+    - file: a function to control the file storage in the database 
+*/
 const storage = new GridFSStorage({ 
   db: conn,
   file: (req, file) => {
@@ -50,6 +45,7 @@ const storage = new GridFSStorage({
   } 
 });
 
+/* Set multer storage engine to our newly created storage objectf */
 const upload  = multer({ storage });
 
 
@@ -203,18 +199,7 @@ router.post('/upload_profile_pic', upload.single('profile_photo'), passport.auth
         res.send(err);
       }
       else{
-        // aggregate pipeline to retrieve size of getme array to retrieve last element's (newly added getme) _id
-        /* const array_size = User.aggregate()
-                            .match({_id: req.user._id})
-                            .project({
-                              getme_views: {$size:"$getme_views"}
-                            })
-                            .exec((err, getme_views) => {
-                              const array_size = getme_views.length;
-                              const newgetme_id = getme_views[array_size - 1]._id;
-                              res.json({success: true, new_id: newgetme_id}); // sending the new _id to front end
-                            }); 
-          */
+       
         res.json({success: true});
       }
     }

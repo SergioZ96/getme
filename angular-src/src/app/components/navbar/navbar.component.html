@@ -1,6 +1,8 @@
 <nav class="navbar navbar-light bg-light">
   <div class="container">
-      <a class="navbar-brand">getme</a>
+      <a [routerLink]="['/']" class="navbar-brand">
+        <img src="../../../assets/img/getme_logo.png">
+      </a>
       <div class="dropdown">
         
         <button *ngIf="!authService.loggedIn()" class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

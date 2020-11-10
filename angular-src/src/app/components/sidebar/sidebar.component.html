@@ -1,7 +1,9 @@
-<nav *ngIf="authService.loggedIn()" id="sidebar">
-    <ul class="sidebar-container">
-      <li><a [routerLink]="['/profile']">Profile</a></li>
-      <li><a [routerLink]="['/views']">Views</a></li>
-      <li><a href="#">Settings</a></li>
-    </ul>
-</nav>
+<div id="sidebar" *ngIf="authService.loggedIn()">
+    <!--<ul class="sidebar-container">-->
+    <a [routerLink]="['/profile']" id="profile-pill" >Profile</a>
+    <a [routerLink]="['/views']" id="views-pill" >Views</a>
+    <a href="#" id="settings-pill">Settings</a>
+</div>
+<!-- <div class="tab-content" id="v-pills-tabContent">
+  <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab"></div>
+</div> -->
