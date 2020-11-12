@@ -14,8 +14,9 @@ export class ProfileComponent implements OnInit {
 
   fileToUpload: File;
   isImage = false;
-  changePic = false;
-  showBioform = false;
+  editBool = false;
+  /* changePic = false;
+  showBioform = false; */
   photoArray: Array<any>;
   bio: string;
   imageSrc = "../../../assets/img/default-profile.png";

@@ -1,4 +1,65 @@
-#v-pills-profile{
-    order: 1;
-    width: 80%;
+#profile-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
+
+    #edit{
+        align-self: flex-end;
+        margin-bottom: 20px;
+        width: 100px;
+        border-radius: 50px;
+    }
+
+    #photo {
+        /* align-self: flex-start; */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+        #photo img {
+            width: 150px;
+            height: 150px;
+            border-radius: 150px;
+            align-self: center;
+        }
+
+        #photo #delete-button{
+            margin-top: 10px;
+            align-self: center;
+            width: 100px;
+            background-color: lightcoral;
+            color: white;
+            border-radius: 7px;
+        }
+    
+    #profile-form{
+        margin-top: 20px;
+        
+    }
+
+    #bio{
+        margin-top: 25px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    #bio button{
+        width: 100px;
+        align-self: flex-start;
+        border-radius: 50px;
+    }
+
+    #bio section{
+        margin-top: 5px;
+        width: 100%;
+        height: 100%;
+        border-radius: 7px;
+    }
+
+    #bio section p{
+        margin-top: 16px; 
+        margin-bottom: 16px;
+        text-align: center;
+    }

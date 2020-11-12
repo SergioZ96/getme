@@ -1,26 +1,29 @@
-<div class="tab-pane fade show" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
-    <div *ngFor="let photo of photoArray">
-        <img (click)="chooseCurrent(photo.image_id)" *ngIf="photo.current || changePic" src="http://localhost:3000/profile_images/{{photo.image_id}}" style="width:150px;height:150px;">
-        <button (click)="deletePhoto(photo.image_id)" *ngIf="changePic">Delete</button>
+<div id="profile-container">
+    <button *ngIf="!editBool" (click)="editBool=true;" id="edit">Edit</button>
+    <div *ngFor="let photo of photoArray" id="photo">
+        <img (click)="chooseCurrent(photo.image_id)" *ngIf="photo.current || editBool" src="http://localhost:3000/profile_images/{{photo.image_id}}" >
+        <button (click)="deletePhoto(photo.image_id)" *ngIf="editBool" id="delete-button">Delete</button>
+
+        <!-- <button *ngIf="!changePic" (click)="changePic=true;" id="edit-pic">Edit Pic</button> -->
+        
+    </div>
+    <div id="profile-form">
+        <form *ngIf="editBool" enctype="multipart/form-data" (submit)="submitFile(); setBio();">
+            <div class="form-group">
+                <input type="file" name="profile_photo" id="profile_photo" (change)="fileUpload($event.target.files)">
+            </div>
+            <div class="form-group">
+                <input type="text" [(ngModel)]="bio" name="bio">
+            </div>
+            <input (click)="editBool=false" type="submit" value="Save">
+            <button (click)="editBool=false;">Cancel</button>
+        </form>
     </div>
 
-
-
-    <button *ngIf="!changePic" (click)="changePic=true;">Edit Pic</button>
-    <form *ngIf="changePic" enctype="multipart/form-data" (submit)="submitFile()">
-        <input type="file" name="profile_photo" id="profile_photo" (change)="fileUpload($event.target.files)">
-        <input type="submit" value="Submit">
-        <button (click)="changePic=false;">Cancel</button>
-    </form>
-
-    <div>
-        <button *ngIf="!showBioform" (click)="showBioform=true">+Bio</button>
-        <form *ngIf="showBioform" (submit)="setBio()">
-            <input type="text" [(ngModel)]="bio" name="bio">
-            <input (click)="showBioform=false" type="submit" value="Submit">
-        </form>
-        
-        <p>{{ bio }}</p>
+    <div id="bio" >
+        <section class="bg-light">
+            <p>{{ bio }}</p>
+        </section>
     </div>
     
 
