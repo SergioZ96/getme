@@ -37,4 +37,8 @@ export class FileService {
     return this.http.post<any>('http://localhost:3000/bio', {bio: bio}, httpOptions);
   }
 
+  editBio(bio): Observable<any> {
+    return this.http.put<any>(`http://localhost:3000/update_bio/${bio}`, bio);
+  }
+
 }

@@ -193,17 +193,25 @@ router.get('/loadgetme', passport.authenticate('jwt', {session: false}), async(r
 // needs to add the image file to the prof_photos collection
 router.post('/upload_profile_pic', upload.single('profile_photo'), passport.authenticate('jwt', {session: false}), (req,res) => {
   console.log(req.file);
-  User.updateOne({_id: req.user._id}, { $push: { prof_photo_ids : [{ image_id: req.file.id.toString(), current: true}]}},
+  User.updateOne({'_id': req.user._id, 'prof_photo_ids.current': true}, {$set: {'prof_photo_ids.$.current': false}},
     (err, result) => {
-      if(err) {
+      if(err){
         res.send(err);
       }
       else{
-       
-        res.json({success: true});
+        User.updateOne({_id: req.user._id}, { $push: { prof_photo_ids : [{ image_id: req.file.id.toString(), current: true}]}},
+          (err, result) => {
+            if(err) {
+              res.send(err);
+            }
+            else{
+            
+              res.json({success: true});
+            }
+          }
+        );
       }
-    }
-  );
+  });
   //res.json({success: true});
 });
 
@@ -283,6 +291,20 @@ router.delete('/delete_photo/:photoId', passport.authenticate('jwt', {session: f
 
 router.post('/bio', passport.authenticate('jwt', {session: false}), (req,res) => {
   User.updateOne({_id: req.user._id}, { $set: {bio: req.body.bio}},
+    (err,result) => {
+      if(err){
+        res.send(err);
+      }
+      else{
+        res.json({success: true});
+      }
+    }
+  );
+});
+
+router.put('/update_bio/:bio', passport.authenticate('jwt', {session: false}), (req,res) => {
+  console.log(req.params.bio);
+  User.updateOne({_id: req.user._id}, { $set: {bio: req.params.bio}},
     (err,result) => {
       if(err){
         res.send(err);

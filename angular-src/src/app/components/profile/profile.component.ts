@@ -19,6 +19,7 @@ export class ProfileComponent implements OnInit {
   showBioform = false; */
   photoArray: Array<any>;
   bio: string;
+  currentBio: string;
   imageSrc = "../../../assets/img/default-profile.png";
 
 
@@ -44,12 +45,22 @@ export class ProfileComponent implements OnInit {
   }
 
   submitFile(){
-    this.fileService.postFile(this.fileToUpload).subscribe(data => {
-      if(data.success){
-        console.log( "The file was received on the backend!");
-      }
-    });
-    this.fileToUpload = null;
+    if(this.fileToUpload != undefined){
+      this.fileService.postFile(this.fileToUpload).subscribe(data => {
+        if(data.success){
+          console.log( "The file was received on the backend!");
+        }
+      });
+      this.fileToUpload = null;
+    }
+    else{
+      this.fileService.editBio(this.bio).subscribe(data => {
+        if(data.success){
+          console.log("Bio updated");
+        }
+      });
+    }
+    
   }
 
   chooseCurrent(photoId){
@@ -77,10 +88,18 @@ export class ProfileComponent implements OnInit {
   }
 
   setBio(){
-    this.fileService.postBio(this.bio).subscribe(data => {
-      if(data.success){
-        console.log("We have the bio");
-      }
-    });
+    /* if(this.bio ===){
+      this.fileService.postBio(this.bio).subscribe(data => {
+        if(data.success){
+          console.log("We have the bio");
+        }
+      });
+    } */
+
+    this.currentBio = this.bio;
+    
+      
+    
   }
+
 }

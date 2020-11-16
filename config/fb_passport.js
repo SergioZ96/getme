@@ -59,8 +59,10 @@ module.exports = function(passport) {
                             newUser.firstname = profile.name.givenName;
                             newUser.lastname = profile.name.familyName;
                             newUser.email = profile.emails[0].value; // first of possible multiple emails
+                            newUser.bio = "";
                             newUser.account_info.social_id = profile.id;
                             newUser.account_info.social = "facebook";
+
 
                             // saving our user to the database
                             newUser.save( (err) => {

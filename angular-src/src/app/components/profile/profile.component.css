@@ -11,33 +11,83 @@
         border-radius: 50px;
     }
 
-    #photo {
-        /* align-self: flex-start; */
+    #photo-container{
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         justify-content: center;
     }
 
-        #photo img {
-            width: 150px;
-            height: 150px;
-            border-radius: 150px;
-            align-self: center;
+        #photo {
+            /* align-self: flex-start; */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            margin: 20px;
         }
 
-        #photo #delete-button{
-            margin-top: 10px;
-            align-self: center;
-            width: 100px;
-            background-color: lightcoral;
-            color: white;
-            border-radius: 7px;
-        }
+            #photo img {
+                width: 150px;
+                height: 150px;
+                border-radius: 150px;
+                align-self: center;
+                
+            }
+
+            #photo #delete-button{
+                align-self: center;
+                position: absolute;
+                bottom: 0;
+                background: white;
+                border-radius: 25px;
+                border: 0;
+                padding: 0;
+                width: 50%;
+                transition: .5s ease;
+                opacity: 0;
+                color: black;
+                font-size: 20px;
+                /* padding: 20px; */
+                text-align: center;
+                /* margin-top: 10px; 
+                align-self: center; 
+                width: 100px;
+                background-color: lightcoral;
+                color: white;
+                border-radius: 7px; */
+            }
+
+            #photo:hover #delete-button{
+                opacity: 1;
+            }
     
     #profile-form{
         margin-top: 20px;
-        
+        align-self: center;
+        width: 500px;
     }
+
+        #profile-form #photo-input-field{
+            width: 50%;
+        }
+
+        #profile-form #bio-input-field{
+            text-align: center;
+        }
+
+        #profile-form button{
+            float: right;
+        }
+
+        #cancel-button{
+            background-color: lightcoral;
+            color: white;
+        }
+
+        #save-button{
+            background-color: lightgreen;
+            color: white;
+        }
 
     #bio{
         margin-top: 25px;

@@ -1,23 +1,28 @@
 <div id="profile-container">
     <button *ngIf="!editBool" (click)="editBool=true;" id="edit">Edit</button>
-    <div *ngFor="let photo of photoArray" id="photo">
-        <img (click)="chooseCurrent(photo.image_id)" *ngIf="photo.current || editBool" src="http://localhost:3000/profile_images/{{photo.image_id}}" >
-        <button (click)="deletePhoto(photo.image_id)" *ngIf="editBool" id="delete-button">Delete</button>
+    <div id="photo-container">
+        <div *ngFor="let photo of photoArray" id="photo">
+            <img (click)="chooseCurrent(photo.image_id)" *ngIf="photo.current || editBool" src="http://localhost:3000/profile_images/{{photo.image_id}}" >
+            <button (click)="deletePhoto(photo.image_id)" *ngIf="editBool" id="delete-button">Delete</button>
 
-        <!-- <button *ngIf="!changePic" (click)="changePic=true;" id="edit-pic">Edit Pic</button> -->
-        
+            <!-- <button *ngIf="!changePic" (click)="changePic=true;" id="edit-pic">Edit Pic</button> -->
+            
+        </div>
     </div>
+        
     <div id="profile-form">
-        <form *ngIf="editBool" enctype="multipart/form-data" (submit)="submitFile(); setBio();">
+        <form *ngIf="editBool" enctype="multipart/form-data">
             <div class="form-group">
-                <input type="file" name="profile_photo" id="profile_photo" (change)="fileUpload($event.target.files)">
+                <input type="file" name="profile_photo" id="photo-input-field" (change)="fileUpload($event.target.files)">
             </div>
             <div class="form-group">
-                <input type="text" [(ngModel)]="bio" name="bio">
+                <input type="text" [(ngModel)]="bio" name="bio" id="bio-input-field" class="form-control">
             </div>
-            <input (click)="editBool=false" type="submit" value="Save">
-            <button (click)="editBool=false;">Cancel</button>
+            
         </form>
+        <button *ngIf="editBool" (click)="editBool=false;" id="cancel-button">Cancel</button>
+        <button *ngIf="editBool" (click)="submitFile();" id="save-button">Save</button>
+        
     </div>
 
     <div id="bio" >
