@@ -9,6 +9,7 @@
         margin-bottom: 20px;
         width: 100px;
         border-radius: 50px;
+        outline: none;
     }
 
     #photo-container{
@@ -80,12 +81,25 @@
         }
 
         #cancel-button{
+            margin-left: 5px;
+            background-color: white;
+            border-radius: 5px;
+            color: black;
+        }
+
+        #save-button{
+            background-color: white;
+            border-radius: 5px;
+            color: black;
+        }
+
+        #cancel-button:hover {
             background-color: lightcoral;
             color: white;
         }
 
-        #save-button{
-            background-color: lightgreen;
+        #save-button:hover {
+            background-color: rgb(72, 202, 72);
             color: white;
         }
 
