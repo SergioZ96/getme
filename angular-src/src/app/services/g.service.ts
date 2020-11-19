@@ -11,22 +11,22 @@ export class GService {
 
   addGetme(getme): Observable<any> {
     let httpOptions = { headers: new HttpHeaders({'Content-Type': 'application/json'})};
-    return this.http.post<any>('http://localhost:3000/addgetme', getme, httpOptions);
+    return this.http.post<any>('addgetme', getme, httpOptions);
   }
 
   loadGetme(): Observable<any> {
     let httpOptions = { headers: new HttpHeaders({'Content-Type': 'application/json'})};
-    return this.http.get<any>('http://localhost:3000/loadgetme', httpOptions);
+    return this.http.get<any>('loadgetme', httpOptions);
   }
 
   editGetme(getme): Observable<any> {
     let httpOptions = { headers: new HttpHeaders({'Content-Type': 'application/json'})};
-    return this.http.put<any>(`http://localhost:3000/editgetme/${getme._id}`, getme, httpOptions);
+    return this.http.put<any>(`editgetme/${getme._id}`, getme, httpOptions);
   }
 
   deleteGetme(id): Observable<any> {
     //let httpOptions = { headers: new HttpHeaders({'Content-Type': 'application/json'})};
-    return this.http.delete<any>(`http://localhost:3000/deletegetme/${id}`);
+    return this.http.delete<any>(`deletegetme/${id}`);
   }
 
 
