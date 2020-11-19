@@ -8,6 +8,7 @@ const UserSchema = mongoose.Schema({
     lastname: String,
     email: String,
     bio: String,
+    link: String,
     prof_photo_ids: [{
         image_id: String,
         current: Boolean

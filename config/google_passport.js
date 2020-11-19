@@ -52,6 +52,7 @@ module.exports = function(passport){
                         newUser.lastname = profile.name.familyName;
                         newUser.email = profile.emails[0].value;
                         newUser.bio = "";
+                        newUser.link = "";
                         newUser.account_info.social_id = profile.id;
                         newUser.account_info.social = "google";
 

@@ -22,6 +22,7 @@ import { AuthService } from './services/auth.service';
 import { GService } from './services/g.service';
 import { InterceptorService } from './services/interceptor.service';
 import { AuthGuard } from './guards/auth.guard';
+import { SettingsComponent } from './components/settings/settings.component';
 
 
 
@@ -33,7 +34,8 @@ const appRoutes: Routes = [
   { path:'', component: HomeComponent },
   { path:'login', component: LoginComponent},
   { path:'profile', component: ProfileComponent, canActivate: [AuthGuard] },
-  { path:'views', component: WholeviewComponent, canActivate: [AuthGuard]}
+  { path:'views', component: WholeviewComponent, canActivate: [AuthGuard]},
+  { path:'settings', component: SettingsComponent, canActivate: [AuthGuard]}
 ];
 
 
@@ -47,7 +49,8 @@ const appRoutes: Routes = [
     ViewsComponent,
     SidebarComponent,
     ChildviewComponent,
-    WholeviewComponent
+    WholeviewComponent,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,
