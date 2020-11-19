@@ -1,0 +1,40 @@
+#childview-container{
+    margin: 20px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+    #getme-display{
+        flex-grow: 1;
+        margin-right: 100px;
+    }
+
+    #getme-update{
+        flex-grow: 1;
+        margin-right: 100px;
+    }
+
+    #button-container{
+        margin-right: 40px;
+    }
+
+        #update-button{
+            margin-right: 5px;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        #save-button{
+            margin-right: 5px;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        #cancel-button{
+            margin-right: 5px;
+            border-radius: 5px;
+            outline: none;
+        }
+

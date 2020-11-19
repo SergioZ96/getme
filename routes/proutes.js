@@ -185,7 +185,6 @@ router.get('/loadgetme', passport.authenticate('jwt', {session: false}), async(r
     res.json({success: false, views: "none"});
   }
   else{
-    console.log(result);
     res.json({success: true, getme_views: result});
   }
 });
@@ -236,7 +235,6 @@ router.get('/profile_images/:id', /* passport.authenticate('jwt', {session: fals
   else{
     //gfs.files.findOne({ _id: mongodb.ObjectId(image_ids[0].image_id)}, (err, file) => {
     gfs.files.findOne({ _id: mongodb.ObjectId(req.params.id)}, (err, file) => {
-      console.log(file);
       const readstream = gfs.createReadStream(file.filename);
       //res.json({success: true, image: file});
       //res.set('Content-Type', file.contentType);

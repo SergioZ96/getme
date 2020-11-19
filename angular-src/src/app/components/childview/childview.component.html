@@ -1,17 +1,13 @@
 
 
-<div *ngIf="getme">
-    
-    <img (click)="deleteGetme(getme._id)" class="float-right" src="assets/img/delete-24px.svg" alt="delete">
-    <button *ngIf="!needToUpdate" (click)="update_button()" class="float-right">Update</button>
-    <button *ngIf="needToUpdate" (click)="save_button()" class="float-right">Save</button>
-    <button *ngIf="needToUpdate" (click)="needToUpdate = false;" class="float-right">Cancel</button>
-    <div *ngIf="!needToUpdate">
+<div *ngIf="getme" id="childview-container">
+
+    <div *ngIf="!needToUpdate" id="getme-display">
         <h2>{{ getme.topic }}</h2>
         <h3>{{ getme.issue }}</h3>
         <p>{{ getme.view }}</p>
     </div>
-    <form *ngIf="needToUpdate">
+    <form *ngIf="needToUpdate" id="getme-update">
         <div class="form-group">
             <label>Topic</label>
             <input type="text" [(ngModel)]="upd_topic" name="upd_topic" class="form-control"/>
@@ -26,4 +22,12 @@
         </div>  
         
     </form>
+
+    <div id="button-container">
+        <button *ngIf="!needToUpdate" (click)="update_button()" id="update-button" >Update</button>
+        <button *ngIf="needToUpdate" (click)="save_button()" id="save-button">Save</button>
+        <button *ngIf="needToUpdate" (click)="needToUpdate = false;" id="cancel-button">Cancel</button>
+        <img (click)="deleteGetme(getme._id)" id="delete-button" src="assets/img/delete-24px.svg" alt="delete">
+    </div>
+    
 </div>
