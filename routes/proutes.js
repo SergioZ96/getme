@@ -63,12 +63,12 @@ router.get('/auth/facebook', passport.authenticate('facebook', { session: false,
 // handle the callback after facebook has authenticated the user
 router.get('/auth/facebook/callback', (req, res, next) => {
 
-  passport.authenticate('facebook', { session: false, failureRedirect: "http://localhost:4200"}, (err, user, info) => {
+  passport.authenticate('facebook', { session: false, failureRedirect: "https://fierce-gorge-54255.herokuapp.com/"}, (err, user, info) => {
     if (err) return next(err);
     
     var token = generateAccessToken(user);
     res.cookie('jwt_user', JSON.stringify({ jwt: token, user: user }));
-    res.redirect("http://localhost:4200/login");
+    res.redirect("https://fierce-gorge-54255.herokuapp.com/login");
 
   })(req, res, next); 
 
@@ -81,11 +81,11 @@ router.get('/auth/google',
 
 router.get('/auth/google/callback', (req, res, next) => {
 
-  passport.authenticate('google', { session: false, failureRedirect: 'http://localhost:4200'}, (err,user,info) => {
+  passport.authenticate('google', { session: false, failureRedirect: 'https://fierce-gorge-54255.herokuapp.com/'}, (err,user,info) => {
     
     var token = generateAccessToken(user);
     res.cookie('jwt_user', JSON.stringify({jwt: token, user: user}));
-    res.redirect('http://localhost:4200/login');
+    res.redirect('https://fierce-gorge-54255.herokuapp.com/login');
 
   })(req, res, next);
 
@@ -97,11 +97,11 @@ router.get('/auth/twitter', passport.authenticate('twitter', { scope: ['email']}
 
 router.get('/auth/twitter/callback', (req, res, next) => {
 
-  passport.authenticate('twitter', { failureRedirect: 'http://localhost:4200' }, (err, user, info) => {
+  passport.authenticate('twitter', { failureRedirect: 'https://fierce-gorge-54255.herokuapp.com/' }, (err, user, info) => {
 
     var token = generateAccessToken(user);
     res.cookie('jwt_user', JSON.stringify({jwt: token, user: user }));
-    res.redirect('http://localhost:4200/login');
+    res.redirect('https://fierce-gorge-54255.herokuapp.com/login');
 
   })(req, res, next);
 

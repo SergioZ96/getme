@@ -19,7 +19,7 @@ module.exports = function(passport) {
 
         consumerKey: process.env.TWITTER_CONSUMER_KEY,
         consumerSecret: process.env.TWITTER_CONSUMER_SECRET,
-        callbackURL: "http://localhost:3000/auth/twitter/callback",
+        callbackURL: "https://fierce-gorge-54255.herokuapp.com/auth/twitter/callback",
         includeEmail: true // necessary to retrieve email from user
                             // also necessary to enable email permissions for app in Twitter
     },
