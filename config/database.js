@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+//const { options } = require('../routes/proutes');
 
 require('dotenv').config();
 
@@ -7,7 +8,9 @@ options = {
     useUnifiedTopology: true
 };
 
-const connection = mongoose.createConnection(process.env.DB_NAME, options);
+mongoose.connect(`mongodb+srv://SergioZ96:${process.env.DB_ATLAS_PASSWORD}@cluster0.mu7ft.mongodb.net/${process.env.DB_ATLAS_NAME}?retryWrites=true&w=majority`, options)
+//const connection = mongoose.createConnection(process.env.DB_NAME, options);
+const connection = mongoose.connection;
 
 connection.on('connected', () => {
     console.log('MongoDB connected...');
@@ -17,4 +20,4 @@ connection.on('error',(err) => {
     console.log(`Database connection error: ${err}`);
 });
 
-module.exports = connection;
+module.exports = mongoose;

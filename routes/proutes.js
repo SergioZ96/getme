@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
-const conn = require('../config/database');
-const mongoose = require('mongoose');
+const mongoose = require('../config/database');
+const mon = require('mongoose');
 const mongodb = require('mongodb');                       /* necessary to use ObjectId() to turn string into mongodb object id */
 const multer = require('multer');                         /* middleware which adds a body and file(s) object to the request object for handling multipart/form-data */
 const GridFSStorage = require('multer-gridfs-storage');   /* GridFS storage engine for Multer to store uploaded files directly to MongoDb */
@@ -17,14 +17,14 @@ router.use(require('cookie-parser')());
 
 // mainly used for testing the handling of form data, works so far
 //const upload = multer({ dest: 'routes/uploads/'});
-
+const conn = mongoose.connection;
 let image_ids;
 
 
 let gfs;
 conn.once('open', () => {
   /* Initialize stream with our db and mongoose, as well as specify the collection we are working with */
-  gfs = Grid(conn.db, mongoose.mongo);
+  gfs = Grid(conn.db, mon.mongo);
   gfs.collection('prof_photos');
 }); 
 

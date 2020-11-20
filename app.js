@@ -5,13 +5,14 @@ const config = require('./config/database');
 const flash = require('connect-flash');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
+const path = require('path');
 //const generateAccessToken = require('./token').generateAccessToken;
 require('dotenv').config();
 
 
 const app = express();
 
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 3000;
 
 app.use(cors());
 
@@ -43,6 +44,11 @@ app.use(passport.session()); // acts as a middleware to alter the req object and
 // Connect flash for flash messages
 app.use(flash());
 
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.get('*', (req,res) => {
+    res.sendFile(path.join(__dirname, 'public/index.html'));
+});
 
 require('./config/fb_passport')(passport);
 require('./config/google_passport')(passport);
