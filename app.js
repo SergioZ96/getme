@@ -1,5 +1,5 @@
-const express = require('express'); 
-const session = require('express-session');
+const express = require('express');                     // web framework for node
+const session = require('express-session');             // 
 const passport = require('passport');
 const config = require('./config/database');
 const flash = require('connect-flash');
@@ -26,7 +26,7 @@ app.use(cookieParser());
 //      and creating the session object in req object. Whenever we make a request from the 
 //      same client again, we will have their session information stored w/ us
 //  -> all the requests to the app routes are now using sessions
-
+/* 
 app.use(session({
     secret: process.env.DB_SECRET,
     resave: true,
@@ -34,7 +34,7 @@ app.use(session({
     cookie: {
         maxAge: 1000 * 60 * 60 * 24 // Equals 1 day
     }
-})); 
+}));  */
 
 
 // Passport Middleware

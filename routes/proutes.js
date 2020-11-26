@@ -58,6 +58,9 @@ router.get('/login', (req,res) => {
 
 
 /* FACEBOOK ROUTER */
+/**
+ *    - Uses Facebook Strategy which can disable sessions and uses OAuth2
+ */
 router.get('/auth/facebook', passport.authenticate('facebook', { session: false, scope : ['email'] })); // need additional permissions from the user, the permissions can be requested via the scope option to passport.authenticate().
 
 // handle the callback after facebook has authenticated the user
@@ -76,6 +79,9 @@ router.get('/auth/facebook/callback', (req, res, next) => {
   
 
 /* GOOGLE ROUTER */
+/**
+ *    - Uses Google Strategy which can disable sessions and uses OAuth2
+ */
 router.get('/auth/google',
   passport.authenticate('google', { session: false, scope: ['profile', 'email'] }));
 
@@ -93,6 +99,9 @@ router.get('/auth/google/callback', (req, res, next) => {
 
 
 /* TWITTER ROUTER */
+/**
+ *    - Uses Twitter Strategy which uses sessions to work as it is built on OAuth1
+ */
 router.get('/auth/twitter', passport.authenticate('twitter', { scope: ['email']}));
 
 router.get('/auth/twitter/callback', (req, res, next) => {
