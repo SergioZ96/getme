@@ -5,6 +5,7 @@ require('dotenv').config();
 
 options = {
     useNewUrlParser: true,
+    useCreateIndex: true,
     useUnifiedTopology: true
 };
 
