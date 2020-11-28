@@ -1,13 +1,23 @@
 const express = require('express');                     // web framework for node
 const session = require('express-session');             // 
 const passport = require('passport');
-const config = require('./config/database');
+const mongoose = require('./config/database');
 const flash = require('connect-flash');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const path = require('path');
 //const generateAccessToken = require('./token').generateAccessToken;
 require('dotenv').config();
+
+const connection = mongoose.connection;
+
+connection.on('connected', () => {
+    console.log('MongoDB connected...');
+});
+
+connection.on('error',(err) => {
+    console.log(`Database connection error: ${err}`);
+});
 
 
 const app = express();
