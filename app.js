@@ -2,6 +2,7 @@ const express = require('express');                     // web framework for nod
 const session = require('express-session');             // 
 const passport = require('passport');
 const mongoose = require('./config/database');
+const MongoStore = require('connect-mongo')(session);
 const flash = require('connect-flash');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
@@ -15,7 +16,7 @@ const app = express();
 
 const port = process.env.PORT || 3000;
 
-//app.use(cors());
+app.use(cors());
 
 
 // Bodyparser
@@ -27,15 +28,19 @@ app.use(cookieParser());
 //      and creating the session object in req object. Whenever we make a request from the 
 //      same client again, we will have their session information stored w/ us
 //  -> all the requests to the app routes are now using sessions
-/* 
+ 
 app.use(session({
-    secret: process.env.DB_SECRET,
+    secret: process.env.DB_ATLAS_PASSWORD,
     resave: true,
     saveUninitialized: true,
+    proxy: true,
     cookie: {
-        maxAge: 1000 * 60 * 60 * 24 // Equals 1 day
+        maxAge: 1000 * 60 * 60 * 24, // Equals 1 day
+        store: new MongoStore({
+            mongooseConnection: mongoose.connection
+        })
     }
-}));  */
+}));  
 
 
 // Passport Middleware
