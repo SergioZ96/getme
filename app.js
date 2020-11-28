@@ -9,15 +9,6 @@ const path = require('path');
 //const generateAccessToken = require('./token').generateAccessToken;
 require('dotenv').config();
 
-const connection = mongoose.connection;
-
-connection.on('connected', () => {
-    console.log('MongoDB connected...');
-});
-
-connection.on('error',(err) => {
-    console.log(`Database connection error: ${err}`);
-});
 
 
 const app = express();
