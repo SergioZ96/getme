@@ -66,12 +66,12 @@ router.get('/auth/facebook', passport.authenticate('facebook', { session: false,
 // handle the callback after facebook has authenticated the user
 router.get('/auth/facebook/callback', (req, res, next) => {
 
-  passport.authenticate('facebook', { session: false, failureRedirect: "https://fierce-gorge-54255.herokuapp.com/"}, (err, user, info) => {
+  passport.authenticate('facebook', { session: false, failureRedirect: "https://www.getmeweb.app/"}, (err, user, info) => {
     if (err) return next(err);
     
     var token = generateAccessToken(user);
     res.cookie('jwt_user', JSON.stringify({ jwt: token, user: user }));
-    res.redirect("https://fierce-gorge-54255.herokuapp.com/login");
+    res.redirect("https://www.getmeweb.app/login");
 
   })(req, res, next); 
 
