@@ -31,8 +31,8 @@ module.exports = function(passport) {
       
       // Verify Callback
       // Facebook will send back the token and profile
-        function( accessToken, refreshToken, profile, done) {
-            User.findOne({ 'account_info.social_id': profile.id }, function (err, user) {
+        async function( accessToken, refreshToken, profile, done) {
+            await User.findOne({ 'account_info.social_id': profile.id }, function (err, user) {
 
                 // check for error
                 if (err) { return done(err); }
