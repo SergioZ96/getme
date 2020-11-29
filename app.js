@@ -47,6 +47,8 @@ app.use(session({
 app.use(passport.initialize()); // initializes passport/authentication module
 app.use(passport.session()); // acts as a middleware to alter the req object and change the 'user' value that is currently the session id (from the client cookie) into the true deserialized user object.
 
+app.enable("trust proxy");
+
 // Connect flash for flash messages
 app.use(flash());
 
