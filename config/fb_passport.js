@@ -24,7 +24,7 @@ module.exports = function(passport) {
 
         clientID:           process.env.FACEBOOK_APP_ID,
         clientSecret:       process.env.FACEBOOK_APP_SECRET,
-        callbackURL:        "https://fierce-gorge-54255.herokuapp.com/auth/facebook/callback",
+        callbackURL:        "https://getmeweb.app/auth/facebook/callback",
         profileFields:      ['id', 'name', 'emails']            // Fields we need from the User
         //passReqToCallback:  true
       },
