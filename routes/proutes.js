@@ -71,7 +71,7 @@ router.get('/auth/facebook/callback', (req, res, next) => {
     
     var token = generateAccessToken(user);
     res.cookie('jwt_user', JSON.stringify({ jwt: token, user: user }));
-    res.redirect("https://getmeweb.app/login");
+    res.redirect("/login");
 
   })(req, res, next); 
 
