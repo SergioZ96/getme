@@ -66,12 +66,13 @@ router.get('/auth/facebook', passport.authenticate('facebook', { session: false,
 // handle the callback after facebook has authenticated the user
 router.get('/auth/facebook/callback', (req, res, next) => {
 
-  passport.authenticate('facebook', { session: false, successRedirect: "/login", failureRedirect: "https://www.getmeweb.app/"}, (err, user, info) => {
+  passport.authenticate('facebook', { session: false, failureRedirect: "https://www.getmeweb.app/"}, (err, user, info) => {
     if (err) return next(err);
     
     var token = generateAccessToken(user);
     res.cookie('jwt_user', JSON.stringify({ jwt: token, user: user }));
-    
+    console.log(__dirname);
+    res.sendFile(__dirname, 'public/index.html/login');
     //res.redirect("/login");
 
   })(req, res, next); 
