@@ -11,6 +11,7 @@ const User = require('../models/user');
 const { response } = require('express');
 const generateAccessToken = require('../token').generateAccessToken;
 //const flash = require('connect-flash');
+const path = require('path');
 
 router.use(require('cookie-parser')());
 
