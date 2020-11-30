@@ -54,9 +54,7 @@ app.use(flash());
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('*', (req,res) => {
-    res.sendFile(path.join(__dirname, 'public/index.html'));
-});
+
 
 require('./config/fb_passport')(passport);
 require('./config/google_passport')(passport);
@@ -74,6 +72,10 @@ app.get('/',(req, res) => {
     // req.session
 });
 
+
+app.get('*', (req,res) => {
+    res.sendFile(path.join(__dirname, 'public/index.html'));
+});
 
 app.listen(port,()=> {
     console.log(`Server started on port ${port}`);
