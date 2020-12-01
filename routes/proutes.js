@@ -49,12 +49,12 @@ const storage = new GridFSStorage({
 /* Set multer storage engine to our newly created storage objectf */
 const upload  = multer({ storage });
 
-
+/* 
 router.get('/login', (req,res) => {
     
     //console.log(req.flash('error'));   
     //console.log(req.flash().error);             
-});
+}); */
 
 
 
@@ -74,7 +74,7 @@ router.get('/auth/facebook/callback', (req, res, next) => {
     res.cookie('jwt_user', JSON.stringify({ jwt: token, user: user }));
     //console.log(__dirname);
     //res.sendFile(path.join('/app', 'public/index.html'));
-    res.redirect("/");
+    res.redirect("/login");
 
   })(req, res, next); 
 
