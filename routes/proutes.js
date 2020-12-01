@@ -72,9 +72,9 @@ router.get('/auth/facebook/callback', (req, res, next) => {
     
     var token = generateAccessToken(user);
     res.cookie('jwt_user', JSON.stringify({ jwt: token, user: user }));
-    console.log(__dirname);
-    res.sendFile(path.join('/app', 'public/index.html'));
-    //res.redirect("/login");
+    //console.log(__dirname);
+    //res.sendFile(path.join('/app', 'public/index.html'));
+    res.redirect("/");
 
   })(req, res, next); 
 
