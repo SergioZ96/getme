@@ -49,23 +49,15 @@ const storage = new GridFSStorage({
 /* Set multer storage engine to our newly created storage objectf */
 const upload  = multer({ storage });
 
-/* 
-router.get('/login', (req,res) => {
-    
-    //console.log(req.flash('error'));   
-    //console.log(req.flash().error);             
-}); */
-
-
 
 /* FACEBOOK ROUTER */
 /**
  *    - Uses Facebook Strategy which can disable sessions and uses OAuth2
  */
-router.get('/auth/facebook', passport.authenticate('facebook', { session: false, scope : ['email'] })); // need additional permissions from the user, the permissions can be requested via the scope option to passport.authenticate().
+router.get('/api/auth/facebook', passport.authenticate('facebook', { session: false, scope : ['email'] })); // need additional permissions from the user, the permissions can be requested via the scope option to passport.authenticate().
 
 // handle the callback after facebook has authenticated the user
-router.get('/auth/facebook/callback', (req, res, next) => {
+router.get('/api/auth/facebook/callback', (req, res, next) => {
 
   passport.authenticate('facebook', { session: false, failureRedirect: "https://www.getmeweb.app/"}, (err, user, info) => {
     if (err) return next(err);

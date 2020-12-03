@@ -2,7 +2,7 @@
     <button *ngIf="!editBool" (click)="editBool=true;" id="edit">Edit</button>
     <div id="photo-container">
         <div *ngFor="let photo of photoArray" id="photo">
-            <img (click)="chooseCurrent(photo.image_id)" *ngIf="photo.current || editBool" src="http://localhost:3000/profile_images/{{photo.image_id}}" >
+            <img (click)="chooseCurrent(photo.image_id)" *ngIf="photo.current || editBool" src="/api/profile_images/{{photo.image_id}}" >
             <button (click)="deletePhoto(photo.image_id)" *ngIf="editBool" id="delete-button">Delete</button>
 
             <!-- <button *ngIf="!changePic" (click)="changePic=true;" id="edit-pic">Edit Pic</button> -->

@@ -7,24 +7,27 @@ const User = require('../models/user');
 
 require('dotenv').config();
 
+
+
 module.exports = function(passport) {
-/* 
-    passport.serializeUser(function(user, done) {
-        done(null, user._id);
-    });
-      
-    passport.deserializeUser(function(id, done) {
-        User.findById(id, function (err, user) {
-          done(err, user);
-        });
-    }); */
- 
+
+    let id, secret, callback;
+    if(process.env.NODE_ENV === "production"){
+        id = process.env.FACEBOOK_APP_ID;
+        secret = process.env.FACEBOOK_APP_SECRET;
+        callback = "https://getmeweb.app/api/auth/facebook/callback";
+    }
+    else{
+        id = process.env.FACEBOOK_TEST_ID;
+        secret = process.env.FACEBOOK_TEST_SECRET;
+        callback = "http://localhost:4200/api/auth/facebook/callback";
+    }
 
     passport.use(new FacebookStrategy({
 
-        clientID:           process.env.FACEBOOK_APP_ID,
-        clientSecret:       process.env.FACEBOOK_APP_SECRET,
-        callbackURL:        "https://getmeweb.app/auth/facebook/callback",
+        clientID:           id,
+        clientSecret:       secret,
+        callbackURL:        callback,
         profileFields:      ['id', 'name', 'emails']            // Fields we need from the User
         //passReqToCallback:  true
       },

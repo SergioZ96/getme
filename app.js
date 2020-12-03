@@ -42,7 +42,7 @@ app.use(session({
     }
 }));  
 
-console.log(__dirname);
+
 // Passport Middleware
 app.use(passport.initialize()); // initializes passport/authentication module
 app.use(passport.session()); // acts as a middleware to alter the req object and change the 'user' value that is currently the session id (from the client cookie) into the true deserialized user object.
@@ -67,10 +67,12 @@ require('./config/jwt_passport')(passport);
 //app.use('/index', require('./routes/index'));
 app.use('/', require('./routes/proutes'));
 
+if(process.env.NODE_ENV === "production"){
+    app.get('*', (req,res) => {
+        res.sendFile(path.join(__dirname, 'public/index.html'));
+    });
+}
 
-app.get('*', (req,res) => {
-    res.sendFile(path.join(__dirname, 'public/index.html'));
-});
 
 app.listen(port,()=> {
     console.log(`Server started on port ${port}`);
