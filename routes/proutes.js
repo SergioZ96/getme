@@ -77,10 +77,10 @@ router.get('/api/auth/facebook/callback', (req, res, next) => {
 /**
  *    - Uses Google Strategy which can disable sessions and uses OAuth2
  */
-router.get('/auth/google',
+router.get('/api/auth/google',
   passport.authenticate('google', { session: false, scope: ['profile', 'email'] }));
 
-router.get('/auth/google/callback', (req, res, next) => {
+router.get('/api/auth/google/callback', (req, res, next) => {
 
   passport.authenticate('google', { session: false, failureRedirect: 'https://www.getmeweb.app/'}, (err,user,info) => {
     
@@ -97,9 +97,9 @@ router.get('/auth/google/callback', (req, res, next) => {
 /**
  *    - Uses Twitter Strategy which uses sessions to work as it is built on OAuth1
  */
-router.get('/auth/twitter', passport.authenticate('twitter', { scope: ['email']}));
+router.get('/api/auth/twitter', passport.authenticate('twitter', { scope: ['email']}));
 
-router.get('/auth/twitter/callback', (req, res, next) => {
+router.get('/api/auth/twitter/callback', (req, res, next) => {
 
   passport.authenticate('twitter', { failureRedirect: 'https://www.getmeweb.app/' }, (err, user, info) => {
 

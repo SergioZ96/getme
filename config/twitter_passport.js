@@ -5,6 +5,14 @@ require('dotenv').config();
 
 module.exports = function(passport) {
 
+    let callback;
+    if(process.env.NODE_ENV === "production"){
+        callback = "https://getmeweb.app/api/auth/twitter/callback";
+    }
+    else{
+        callback = "http://localhost:4200/api/auth/twitter/callback";
+    }
+
     passport.serializeUser((user, done) => {
         done(null, user.id);
       });
@@ -19,7 +27,7 @@ module.exports = function(passport) {
 
         consumerKey: process.env.TWITTER_CONSUMER_KEY,
         consumerSecret: process.env.TWITTER_CONSUMER_SECRET,
-        callbackURL: "https://fierce-gorge-54255.herokuapp.com/auth/twitter/callback",
+        callbackURL: callback,
         includeEmail: true // necessary to retrieve email from user
                             // also necessary to enable email permissions for app in Twitter
     },

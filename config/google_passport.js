@@ -7,12 +7,20 @@ require('dotenv').config();
 
 module.exports = function(passport){
 
+    let callback;
+    if(process.env.NODE_ENV === "production"){
+        callback = "https://getmeweb.app/api/auth/google/callback";
+    }
+    else{
+        callback = "http://localhost:4200/api/auth/google/callback";
+    }
+
 
     passport.use(new GoogleStrategy({
 
             clientID:           process.env.GOOGLE_CLIENT_ID,
             clientSecret:       process.env.GOOGLE_CLIENT_SECRET,
-            callbackURL:        "https://fierce-gorge-54255.herokuapp.com/auth/google/callback",
+            callbackURL:        callback,
             passReqToCallback   : true
       },
 
