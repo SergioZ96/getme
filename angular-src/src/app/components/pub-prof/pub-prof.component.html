@@ -1,0 +1,27 @@
+<div id="public-container">
+    <div id="public-photo">
+       <img *ngIf="imgReady"src="/api/profile_images/{{image_id}}">
+    </div>
+
+    <div id="public-bio">
+        <section class="bg-light">
+            <p>{{ bio }}</p>
+        </section>
+    </div>
+
+    <div id="getme-container">
+        <section class="bg-light">
+            <ul class="g-list">
+                <li *ngFor="let getme of getme_list" [class.selected]="getme === selectedGetme" (click)="showFullGetme(getme)">
+                    <h2>{{getme.topic}}</h2>
+                </li>
+            </ul>
+        </section>
+        <div *ngIf="selectedGetme" id="getme-info">
+            <h2>{{ selectedGetme.topic }}</h2>
+            <h3>{{ selectedGetme.issue }}</h3>
+            <p>{{ selectedGetme.view }}</p>
+        </div> 
+
+    </div>
+</div>

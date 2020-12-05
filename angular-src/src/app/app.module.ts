@@ -23,6 +23,7 @@ import { GService } from './services/g.service';
 import { InterceptorService } from './services/interceptor.service';
 import { AuthGuard } from './guards/auth.guard';
 import { SettingsComponent } from './components/settings/settings.component';
+import { PubProfComponent } from './components/pub-prof/pub-prof.component';
 
 
 
@@ -35,7 +36,8 @@ const appRoutes: Routes = [
   { path:'login', component: LoginComponent},
   { path:'profile', component: ProfileComponent, canActivate: [AuthGuard] },
   { path:'views', component: WholeviewComponent, canActivate: [AuthGuard]},
-  { path:'settings', component: SettingsComponent, canActivate: [AuthGuard]}
+  { path:'settings', component: SettingsComponent, canActivate: [AuthGuard]},
+  { path:':link', component: PubProfComponent}
 ];
 
 
@@ -50,7 +52,8 @@ const appRoutes: Routes = [
     SidebarComponent,
     ChildviewComponent,
     WholeviewComponent,
-    SettingsComponent
+    SettingsComponent,
+    PubProfComponent
   ],
   imports: [
     BrowserModule,

@@ -1,4 +1,14 @@
 <div id="settings-container">
-    <button id="link-button"></button>
-    <p id="link"></p>
+    
+    <section>
+        <h3>Generate Your Link</h3>
+        <p>You can share your Getme link with anyone you want to get you.</p>
+
+        <button id="link-button" (click)="generateLink()">Generate Link</button>
+        <p id="link">getmeweb.app/{{ link }}</p><br>
+        <!-- <a href="getmeweb.app/{{link}}">getmeweb.app/{{link}}</a> -->
+        
+        
+    </section>
+        
 </div>

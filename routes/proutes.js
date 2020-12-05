@@ -242,6 +242,7 @@ router.get('/api/profile_images/:id', /* passport.authenticate('jwt', {session: 
       const readstream = gfs.createReadStream(file.filename);
       //res.json({success: true, image: file});
       //res.set('Content-Type', file.contentType);
+      //res.set('Content-Type','image/jpeg');
       return readstream.pipe(res);
     });
   }
@@ -317,5 +318,32 @@ router.put('/api/update_bio/:bio', passport.authenticate('jwt', {session: false}
     }
   );
 });
+
+router.put('/api/update_link/:link', passport.authenticate('jwt', {session: false}), (req,res) => {
+  //console.log(req.params.link);
+  User.updateOne({_id: req.user._id}, { $set : {link: req.params.link}},
+    (err,result) => {
+      if(err){
+        res.send(err);
+      }
+      else{
+        res.json({success: true});
+      }
+    }
+  );
+});
+
+router.get('/api/profile_link/:link', async (req,res) => {
+  // First we need to get the user profile fields (all fields besides the getmes)
+  
+  const profile = await User.findOne({link: req.params.link}).exec();
+  //const profile = await User.findById(req.params.link, 'firstname lastname email bio prof_photo_ids getme_views').exec();
+  
+  res.json({success: true, profile: profile});
+});
+/* 
+router.get('/:link', (req,res) => {
+  
+}); */
 
 module.exports = router;
