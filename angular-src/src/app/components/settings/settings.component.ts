@@ -9,10 +9,17 @@ import { LinkgenService } from '../../services/linkgen.service';
 export class SettingsComponent implements OnInit {
 
   link:string;
+  copy:string;
 
   constructor(private linkgen: LinkgenService) { }
 
   ngOnInit(): void {
+    this.linkgen.getLink().subscribe(data => {
+      if(data.success){
+        this.link = data.link;
+      }
+    });
+
   }
 
   generateLink(){
@@ -30,6 +37,20 @@ export class SettingsComponent implements OnInit {
       }
     });
 
+  }
+
+  copyLink(){
+    const selLink = document.createElement('textarea');
+    selLink.style.position = 'fixed';
+    selLink.style.left = '0';
+    selLink.style.top = '0';
+    selLink.style.opacity = '0';
+    selLink.value = `getmeweb.app/${this.link}`;
+    document.body.appendChild(selLink);
+    selLink.focus();
+    selLink.select();
+    document.execCommand('copy');
+    document.body.removeChild(selLink);
   }
 
 }

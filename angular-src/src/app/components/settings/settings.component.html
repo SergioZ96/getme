@@ -5,8 +5,12 @@
         <p>You can share your Getme link with anyone you want to get you.</p>
 
         <button id="link-button" (click)="generateLink()">Generate Link</button>
-        <p id="link">getmeweb.app/{{ link }}</p><br>
-        <!-- <a href="getmeweb.app/{{link}}">getmeweb.app/{{link}}</a> -->
+        <div class="break"></div>
+        <div id="copy-container">
+            <p id="link">getmeweb.app/{{ link }}</p>
+            <img (click)="copyLink()" id="copy-button" src="assets/img/copy.png" alt="copy">
+        </div>
+        
         
         
     </section>

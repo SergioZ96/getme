@@ -319,6 +319,11 @@ router.put('/api/update_bio/:bio', passport.authenticate('jwt', {session: false}
   );
 });
 
+router.get('/api/get_link', passport.authenticate('jwt', {session: false}), async (req,res) => {
+  const link = (await User.findById(req.user._id, 'link').exec()).link;
+  res.json({success: true, link: link});
+});
+
 router.put('/api/update_link/:link', passport.authenticate('jwt', {session: false}), (req,res) => {
   //console.log(req.params.link);
   User.updateOne({_id: req.user._id}, { $set : {link: req.params.link}},

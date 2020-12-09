@@ -9,6 +9,11 @@ export class LinkgenService {
 
   constructor(private http: HttpClient) { }
 
+  getLink(): Observable<any> {
+    let httpOptions = { headers: new HttpHeaders({'Content-Type': 'application/json'})};
+    return this.http.get<any>(`api/get_link/`, httpOptions);
+  }
+
   updateLink(link): Observable<any> {
     return this.http.put<any>(`api/update_link/${link}`, link);
   }

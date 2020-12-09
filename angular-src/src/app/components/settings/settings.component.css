@@ -1,0 +1,35 @@
+section{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 30%;
+}
+
+    #link-button{
+        width: 40%;
+    }
+
+    .break{
+        flex-basis: 100%;
+        width: 0;
+    }
+
+    #copy-container{
+        margin-top: 20px;
+        display: flex;
+        flex-direction: row;
+    }
+
+    #link{
+        width:275px;
+    }  
+
+    #copy-button{
+        width: 30px;
+        height: 30px;
+        
+    }
+
+    #copy-button:hover {
+        cursor: pointer;
+    }
