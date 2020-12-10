@@ -16,7 +16,7 @@
                 <input type="file" name="profile_photo" id="photo-input-field" (change)="fileUpload($event.target.files)">
             </div>
             <div class="form-group">
-                <input type="text" [(ngModel)]="bio" name="bio" id="bio-input-field" class="form-control">
+                <input type="text" [(ngModel)]="bio" name="bio" id="bio-input-field" class="form-control" [value]="currentBio">
             </div>
             
         </form>
@@ -27,7 +27,7 @@
 
     <div id="bio" >
         <section class="bg-light">
-            <p>{{ bio }}</p>
+            <p>{{ currentBio }}</p>
         </section>
     </div>
     

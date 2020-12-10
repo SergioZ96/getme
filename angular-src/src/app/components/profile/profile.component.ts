@@ -21,6 +21,7 @@ export class ProfileComponent implements OnInit {
   bio: string;
   currentBio: string;
   imageSrc = "../../../assets/img/default-profile.png";
+  changeImage = false;
 
 
   constructor(
@@ -31,8 +32,7 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.fileService.getProfile().subscribe(data => {
-      console.log("we are here");
-      this.bio = data.profile.bio;
+      this.currentBio = data.profile.bio;
       this.photoArray = data.profile.prof_photo_ids;
       // we will loop through this photo_array in the front end 
       
@@ -45,20 +45,55 @@ export class ProfileComponent implements OnInit {
   }
 
   submitFile(){
-    if(this.fileToUpload != undefined){
+    if(this.fileToUpload != undefined && this.bio != this.currentBio){
       this.fileService.postFile(this.fileToUpload).subscribe(data => {
         if(data.success){
-          console.log( "The file was received on the backend!");
+          this.fileToUpload = null;
         }
       });
-      this.fileToUpload = null;
+      
+      this.fileService.editBio(this.bio).subscribe(data => {
+        if(data.success){
+          this.currentBio = this.bio;
+        }
+      });
+
+      window.location.reload();
     }
+
+    else if(this.fileToUpload != undefined && this.bio == this.currentBio){
+      this.fileService.postFile(this.fileToUpload).subscribe(data => {
+        if(data.success){
+          this.fileToUpload = null;
+        }
+      });
+    
+      window.location.reload();
+    }
+
+    else if((this.changeImage && this.bio != undefined ) || ( !this.changeImage && this.bio != undefined )){
+      this.fileService.editBio(this.bio).subscribe(data => {
+        if(data.success){
+          this.currentBio = this.bio;
+          this.changeImage = false;
+        }
+      });
+
+      window.location.reload();
+    }
+
+    else if((this.changeImage && this.bio == undefined) || ( !this.changeImage && this.bio == undefined )){
+      this.changeImage = false;
+      window.location.reload();
+    }
+
     else{
       this.fileService.editBio(this.bio).subscribe(data => {
         if(data.success){
-          console.log("Bio updated");
+          this.currentBio = this.bio;
+          //window.location.reload();
         }
-      });
+      }); 
     }
     
   }
@@ -70,8 +105,9 @@ export class ProfileComponent implements OnInit {
     }
     this.fileService.currentImage(photoId).subscribe(data => {
       if(data.success){
-        window.location.reload();
-        console.log('Updated Profile Picture');
+        this.changeImage = true;
+        //window.location.reload();
+        //console.log('Updated Profile Picture');
         
       }
       
@@ -82,24 +118,10 @@ export class ProfileComponent implements OnInit {
     this.fileService.deleteImage(photoId).subscribe(data => {
       if(data.success){
         window.location.reload();
-        console.log('Deleted the image');
+        //console.log('Deleted the image');
       }
     });
   }
 
-  setBio(){
-    /* if(this.bio ===){
-      this.fileService.postBio(this.bio).subscribe(data => {
-        if(data.success){
-          console.log("We have the bio");
-        }
-      });
-    } */
-
-    this.currentBio = this.bio;
-    
-      
-    
-  }
 
 }
