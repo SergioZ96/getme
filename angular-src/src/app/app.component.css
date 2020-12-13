@@ -1,4 +1,4 @@
-#container{
+.container{
     height: 100%;
     /* width: 100%; */
     margin-left: 20%;
@@ -7,7 +7,15 @@
     flex-direction: row;
 }
 
-#sub-container {
+.xs-container{
+    height: 100%;
+    margin-left:10%;
+    margin-right: 10%;
+    display: flex;
+    flex-direction: column;
+}
+
+.sub-container {
    /*  height: 100%; */
     width: 60%; 
     margin-top: 50px;
@@ -17,3 +25,7 @@
    /*  display: flex;
     justify-content: center;*/
 } 
+
+.xs-sub-container{
+    margin-top: 50px;
+}

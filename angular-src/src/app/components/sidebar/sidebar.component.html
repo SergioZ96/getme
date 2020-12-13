@@ -1,8 +1,13 @@
-<div id="sidebar" *ngIf="authService.loggedIn()">
+<div id="sidebar" *ngIf="authService.loggedIn() && !deviceSize['xs']">
     <!--<ul class="sidebar-container">-->
     <a [routerLink]="['/profile']" id="profile-pill" >Profile</a>
     <a [routerLink]="['/views']" id="views-pill" >Views</a>
     <a [routerLink]="['/settings']" id="settings-pill">Settings</a>
+</div>
+<div id="nav-sidebar" *ngIf="authService.loggedIn() && deviceSize['xs']">
+    <a [routerLink]="['/profile']" id="profile-pill-nav" >Profile</a>
+    <a [routerLink]="['/views']" id="views-pill-nav" >Views</a>
+    <a [routerLink]="['/settings']" id="settings-pill-nav">Settings</a>
 </div>
 <!-- <div class="tab-content" id="v-pills-tabContent">
   <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab"></div>

@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { LinkgenService } from '../../services/linkgen.service';
 import { Getme, UserGetme } from '../../interfaces/getme';
+import { MqService } from '../../services/mq.service';
 
 @Component({
   selector: 'app-pub-prof',
@@ -10,6 +11,7 @@ import { Getme, UserGetme } from '../../interfaces/getme';
 })
 export class PubProfComponent implements OnInit {
 
+  //@Input() deviceSize: Object;
   getme_list:UserGetme[] = [];
   link:string;
   name:string;
@@ -20,10 +22,12 @@ export class PubProfComponent implements OnInit {
   bio:string;
   image_id:string;
   imgReady:Boolean;
+  deviceSize: string;
 
-  constructor(private route: ActivatedRoute, private linkgen: LinkgenService) { }
+  constructor(private route: ActivatedRoute, private linkgen: LinkgenService, private mq: MqService) { }
 
   ngOnInit(): void {
+    this.mq.data$.subscribe(res => this.deviceSize = res);
     this.imgReady = false;
     this.link = this.route.snapshot.paramMap.get('link');
     this.linkgen.getProfile_from_link(this.link).subscribe(data => {

@@ -1,7 +1,7 @@
 <app-navbar></app-navbar>
-<div id="container">
-  <app-sidebar></app-sidebar>
-  <div id="sub-container">
+<div [ngClass]="deviceSize['xs'] ? 'xs-container' : 'container'">
+  <app-sidebar [deviceSize]="deviceSize"></app-sidebar>
+  <div [ngClass]="deviceSize['xs'] ? 'xs-sub-container' : 'sub-container'">
     <router-outlet></router-outlet>
   </div>
 </div>
