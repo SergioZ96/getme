@@ -1,3 +1,7 @@
+#main-navbar{
+    width: 100%;
+}
+
 .logout a {
     text-decoration: none;
 }

@@ -9,6 +9,7 @@
         <div id="copy-container">
             <p id="link">getmeweb.app/{{ link }}</p>
             <img (click)="copyLink()" id="copy-button" src="assets/img/copy.png" alt="copy">
+            <p *ngIf="isCopied" id="is-copied">Copied!</p>
         </div>
         
         

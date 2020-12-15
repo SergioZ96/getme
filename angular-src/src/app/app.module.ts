@@ -24,6 +24,7 @@ import { InterceptorService } from './services/interceptor.service';
 import { AuthGuard } from './guards/auth.guard';
 import { SettingsComponent } from './components/settings/settings.component';
 import { PubProfComponent } from './components/pub-prof/pub-prof.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 
 
@@ -53,7 +54,8 @@ const appRoutes: Routes = [
     ChildviewComponent,
     WholeviewComponent,
     SettingsComponent,
-    PubProfComponent
+    PubProfComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

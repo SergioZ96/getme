@@ -33,3 +33,9 @@ section{
     #copy-button:hover {
         cursor: pointer;
     }
+
+    #is-copied {
+        margin-left: 5px;
+        color: lightgray;
+        font-style: italic;
+    }

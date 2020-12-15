@@ -10,10 +10,12 @@ export class SettingsComponent implements OnInit {
 
   link:string;
   copy:string;
+  isCopied:boolean;
 
   constructor(private linkgen: LinkgenService) { }
 
   ngOnInit(): void {
+    this.isCopied = false;
     this.linkgen.getLink().subscribe(data => {
       if(data.success){
         this.link = data.link;
@@ -51,6 +53,7 @@ export class SettingsComponent implements OnInit {
     selLink.select();
     document.execCommand('copy');
     document.body.removeChild(selLink);
+    this.isCopied = true;
   }
 
 }
