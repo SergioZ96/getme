@@ -112,13 +112,8 @@ router.get('/api/auth/twitter/callback', (req, res, next) => {
 });
 
 
-// Needs to be a protected route
-router.get('/api/profile_test', passport.authenticate('jwt', {session: false }), (req,res) => {
-  res.json({ success: true, msg: "hello there !"});
-});
-
 // getme add route which receives topic, issue, view and returns the new getme _id to push the getme_list on front end
-router.post('/api/addgetme', passport.authenticate('jwt', {session: false}), (req,res) => {
+router.post('/api/getme', passport.authenticate('jwt', {session: false}), (req,res) => {
   const getme = {
     topic: req.body.topic,
     issue: req.body.issue,
@@ -152,7 +147,7 @@ router.post('/api/addgetme', passport.authenticate('jwt', {session: false}), (re
 });
 
 // getme edit route which updates a getme 
-router.put('/api/editgetme/:id', passport.authenticate('jwt', {session: false}), (req, res) => {
+router.put('/api/getme/:id', passport.authenticate('jwt', {session: false}), (req, res) => {
   User.updateOne({'_id': req.user._id, 'getme_views._id': req.params.id}, {$set: {'getme_views.$.topic': req.body.topic, 'getme_views.$.issue': req.body.issue, 'getme_views.$.view': req.body.view}}, 
     (err, result) => {
       if(err){
@@ -167,7 +162,7 @@ router.put('/api/editgetme/:id', passport.authenticate('jwt', {session: false}),
 });
 
 // getme delete route which deletes on the basis of getme _id
-router.delete('/api/deletegetme/:id', passport.authenticate('jwt', {session: false}), (req, res) => {
+router.delete('/api/getme/:id', passport.authenticate('jwt', {session: false}), (req, res) => {
   console.log(req.params.id);
   User.updateOne({_id: req.user._id}, { $pull: { getme_views: {_id: req.params.id}}},
     (err, result) => {
@@ -181,8 +176,8 @@ router.delete('/api/deletegetme/:id', passport.authenticate('jwt', {session: fal
   );
 });
 
-
-router.get('/api/loadgetme', passport.authenticate('jwt', {session: false}), async(req,res) =>{
+// Load the getmes
+router.get('/api/getme', passport.authenticate('jwt', {session: false}), async(req,res) =>{
   // Here we have to pass the user's getme's from the db to the client
   const result = await User.findById(req.user._id, 'getme_views').exec();
   if(result === null){
@@ -194,7 +189,7 @@ router.get('/api/loadgetme', passport.authenticate('jwt', {session: false}), asy
 });
 
 // needs to add the image file to the prof_photos collection
-router.post('/api/upload_profile_pic', upload.single('profile_photo'), passport.authenticate('jwt', {session: false}), (req,res) => {
+router.post('/api/profile/pic', upload.single('profile_photo'), passport.authenticate('jwt', {session: false}), (req,res) => {
   console.log(req.file);
   User.updateOne({'_id': req.user._id, 'prof_photo_ids.current': true}, {$set: {'prof_photo_ids.$.current': false}},
     (err, result) => {
@@ -232,7 +227,7 @@ router.get('/api/profile', passport.authenticate('jwt', {session: false}), async
   
 });
 
-router.get('/api/profile_images/:id', /* passport.authenticate('jwt', {session: false}), */ (req, res) => {
+router.get('/api/profile/images/:id', /* passport.authenticate('jwt', {session: false}), */ (req, res) => {
   if(image_ids === undefined || image_ids.length == 0){
     return;
   }
@@ -248,8 +243,8 @@ router.get('/api/profile_images/:id', /* passport.authenticate('jwt', {session: 
   }
   
 });
-
-router.put('/api/update_current/:photoID', passport.authenticate('jwt', {session: false}), (req,res) => {
+// Update current photo ID for profile
+router.put('/api/profile/pic/:photoID', passport.authenticate('jwt', {session: false}), (req,res) => {
   // Look through the profile photo id array to see which object has field current : true, and we change it to false
   User.updateOne({'_id': req.user._id, 'prof_photo_ids.current': true}, {$set: {'prof_photo_ids.$.current': false}},
     (err, result) => {
@@ -273,7 +268,7 @@ router.put('/api/update_current/:photoID', passport.authenticate('jwt', {session
   );
 });
 
-router.delete('/api/delete_photo/:photoId', passport.authenticate('jwt', {session: false}), (req,res) => {
+router.delete('/api/profile/pic/:photoId', passport.authenticate('jwt', {session: false}), (req,res) => {
   gfs.remove({ _id: mongodb.ObjectId(req.params.id), root: 'prof_photos'}, (err, gridStore) => {
     if(err){
       return res.status(404).json({ err: err});
@@ -292,7 +287,7 @@ router.delete('/api/delete_photo/:photoId', passport.authenticate('jwt', {sessio
   });
 });
 
-router.post('/api/bio', passport.authenticate('jwt', {session: false}), (req,res) => {
+router.post('/api/profile/bio', passport.authenticate('jwt', {session: false}), (req,res) => {
   User.updateOne({_id: req.user._id}, { $set: {bio: req.body.bio}},
     (err,result) => {
       if(err){
@@ -305,7 +300,7 @@ router.post('/api/bio', passport.authenticate('jwt', {session: false}), (req,res
   );
 });
 
-router.put('/api/update_bio/:bio', passport.authenticate('jwt', {session: false}), (req,res) => {
+router.put('/api/profile/bio/:bio', passport.authenticate('jwt', {session: false}), (req,res) => {
   console.log(req.params.bio);
   User.updateOne({_id: req.user._id}, { $set: {bio: req.params.bio}},
     (err,result) => {
@@ -319,12 +314,12 @@ router.put('/api/update_bio/:bio', passport.authenticate('jwt', {session: false}
   );
 });
 
-router.get('/api/get_link', passport.authenticate('jwt', {session: false}), async (req,res) => {
+router.get('/api/link', passport.authenticate('jwt', {session: false}), async (req,res) => {
   const link = (await User.findById(req.user._id, 'link').exec()).link;
   res.json({success: true, link: link});
 });
 
-router.put('/api/update_link/:link', passport.authenticate('jwt', {session: false}), (req,res) => {
+router.put('/api/link/:link', passport.authenticate('jwt', {session: false}), (req,res) => {
   //console.log(req.params.link);
   User.updateOne({_id: req.user._id}, { $set : {link: req.params.link}},
     (err,result) => {
@@ -338,7 +333,7 @@ router.put('/api/update_link/:link', passport.authenticate('jwt', {session: fals
   );
 });
 
-router.get('/api/profile_link/:link', async (req,res) => {
+router.get('/api/link/:link', async (req,res) => {
   // First we need to get the user profile fields (all fields besides the getmes)
   
   const profile = await User.findOne({link: req.params.link}).exec();
@@ -350,5 +345,10 @@ router.get('/api/profile_link/:link', async (req,res) => {
 router.get('/:link', (req,res) => {
   
 }); */
+
+router.get('/api/json/:link', async (req,res) => {
+  const profile = await User.findOne({link: req.params.link}).exec();
+  res.send(profile);
+});
 
 module.exports = router;

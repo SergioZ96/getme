@@ -1,6 +1,6 @@
 <div id="public-container">
     <div [ngClass]="(deviceSize == 'xs') ? 'xs-public-photo' : 'public-photo'">
-       <img *ngIf="imgReady"src="/api/profile_images/{{image_id}}">
+       <img *ngIf="imgReady"src="/api/profile/images/{{image_id}}">
     </div>
 
     <div [ngClass]="(deviceSize == 'xs') ? 'xs-public-bio' : 'public-bio'">

@@ -11,15 +11,15 @@ export class LinkgenService {
 
   getLink(): Observable<any> {
     let httpOptions = { headers: new HttpHeaders({'Content-Type': 'application/json'})};
-    return this.http.get<any>(`api/get_link/`, httpOptions);
+    return this.http.get<any>(`api/link`, httpOptions);
   }
 
   updateLink(link): Observable<any> {
-    return this.http.put<any>(`api/update_link/${link}`, link);
+    return this.http.put<any>(`api/link/${link}`, link);
   }
 
   getProfile_from_link(link): Observable<any> {
-    return this.http.get<any>( `api/profile_link/${link}`, link);
+    return this.http.get<any>( `api/link/${link}`, link);
   }
 
 }
